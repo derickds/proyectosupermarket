@@ -1,2 +1,2 @@
-# prueba
-Prueba de repositorio
+# Proyecto Supermarket
+Nuevo ERP para supermercado.
