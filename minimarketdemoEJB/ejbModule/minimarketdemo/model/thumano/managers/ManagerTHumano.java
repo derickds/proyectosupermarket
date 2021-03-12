@@ -45,8 +45,6 @@ public class ManagerTHumano {
     public ThmEmpleado insertarThmEmpleado(ThmEmpleado nuevoEmpleado,int idThmCargo,int idSegUsuario) throws Exception {
     	ThmEmpleado nuevo=new ThmEmpleado();
     	Random rnd=new Random();
-    	nuevo.setCuotaPrestamo(new BigDecimal(100*rnd.nextDouble()));//prestamo entre 0 y 100
-    	nuevo.setHorasExtra(rnd.nextInt(20));//maximo 20 horas extra
     	nuevo.setHorasTrabajadas(160);//160 horas mensuales
     	nuevo.setSegUsuario(mSeguridades.findByIdSegUsuario(idSegUsuario));
     	nuevo.setThmCargo(findByIdThmCargo(idThmCargo));
@@ -77,9 +75,7 @@ public class ManagerTHumano {
     	for(ThmEmpleado empleado:listaEmpleados) {
     		//por cada empleado se genera la cabecera del rol:
     		ThmRolCabecera cab=new ThmRolCabecera();
-    		cab.setHorasExtras(empleado.getHorasExtra());
-    		cab.setHorasTrabajadas(empleado.getHorasTrabajadas());
-    		cab.setNombreCargo(empleado.getThmCargo().getNombreCargo());
+    		cab.setHorasExtras(2);
     		cab.setPeriodoRol(periodoRol);
     		cab.setThmEmpleado(empleado);
     		//generar el detalle de cada rol cabecera:
@@ -107,7 +103,7 @@ public class ManagerTHumano {
 		det.setOrden(2);
 		det.setThmRolCabecera(cab);
 		det.setTipoDetalle("IN");
-		det.setValor(new BigDecimal(emp.getHorasExtra()*emp.getThmCargo().getRemuneracionMensual().doubleValue()/emp.getHorasTrabajadas()*INCREMENTO_HEXTRA));
+		det.setValor(new BigDecimal(2*emp.getThmCargo().getRemuneracionMensual().doubleValue()/emp.getHorasTrabajadas()*INCREMENTO_HEXTRA));
 		detalles.add(det);
 		subtotal+=det.getValor().doubleValue();
 		
@@ -149,14 +145,12 @@ public class ManagerTHumano {
 		det.setOrden(6);
 		det.setThmRolCabecera(cab);
 		det.setTipoDetalle("EG");
-		det.setValor(emp.getCuotaPrestamo());
 		detalles.add(det);
 		subtotal+=det.getValor().doubleValue();
 		
-		cab.setSubtotalEgresos(new BigDecimal(subtotal));
 		subtotal=0;
 		
-		total=cab.getSubtotalIngresos().doubleValue()+cab.getSubtotalIngresosAdicionales().doubleValue()-cab.getSubtotalEgresos().doubleValue();
+		total=cab.getSubtotalIngresos().doubleValue()+cab.getSubtotalIngresosAdicionales().doubleValue();
 		cab.setTotal(new BigDecimal(total));
 		
 		cab.setThmRolDetalles(detalles);

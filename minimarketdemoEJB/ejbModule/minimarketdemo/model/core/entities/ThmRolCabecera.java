@@ -24,17 +24,8 @@ public class ThmRolCabecera implements Serializable {
 	@Column(name="horas_extras", nullable=false)
 	private Integer horasExtras;
 
-	@Column(name="horas_trabajadas", nullable=false)
-	private Integer horasTrabajadas;
-
-	@Column(name="nombre_cargo", nullable=false, length=50)
-	private String nombreCargo;
-
 	@Column(name="periodo_rol", nullable=false, length=6)
 	private String periodoRol;
-
-	@Column(name="subtotal_egresos", nullable=false, precision=7, scale=2)
-	private BigDecimal subtotalEgresos;
 
 	@Column(name="subtotal_ingresos", nullable=false, precision=7, scale=2)
 	private BigDecimal subtotalIngresos;
@@ -51,7 +42,7 @@ public class ThmRolCabecera implements Serializable {
 	private ThmEmpleado thmEmpleado;
 
 	//bi-directional many-to-one association to ThmRolDetalle
-	@OneToMany(mappedBy="thmRolCabecera",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="thmRolCabecera")
 	private List<ThmRolDetalle> thmRolDetalles;
 
 	public ThmRolCabecera() {
@@ -73,36 +64,12 @@ public class ThmRolCabecera implements Serializable {
 		this.horasExtras = horasExtras;
 	}
 
-	public Integer getHorasTrabajadas() {
-		return this.horasTrabajadas;
-	}
-
-	public void setHorasTrabajadas(Integer horasTrabajadas) {
-		this.horasTrabajadas = horasTrabajadas;
-	}
-
-	public String getNombreCargo() {
-		return this.nombreCargo;
-	}
-
-	public void setNombreCargo(String nombreCargo) {
-		this.nombreCargo = nombreCargo;
-	}
-
 	public String getPeriodoRol() {
 		return this.periodoRol;
 	}
 
 	public void setPeriodoRol(String periodoRol) {
 		this.periodoRol = periodoRol;
-	}
-
-	public BigDecimal getSubtotalEgresos() {
-		return this.subtotalEgresos;
-	}
-
-	public void setSubtotalEgresos(BigDecimal subtotalEgresos) {
-		this.subtotalEgresos = subtotalEgresos;
 	}
 
 	public BigDecimal getSubtotalIngresos() {

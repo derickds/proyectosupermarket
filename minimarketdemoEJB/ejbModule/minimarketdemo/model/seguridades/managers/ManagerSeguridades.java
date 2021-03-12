@@ -59,7 +59,6 @@ public class ManagerSeguridades {
     	//creacion del usuario administrador:
     	if(existeAdministrador==false) {
 			SegUsuario administrador=new SegUsuario();
-			administrador.setActivo(true);
 			administrador.setApellidos("admin");
 			administrador.setClave("admin");
 			administrador.setCorreo("admin@minimarketdemo.com");
@@ -108,10 +107,7 @@ public class ManagerSeguridades {
     	}
     		
     	if(usuario.getClave().equals(clave)) {
-    		if(usuario.getActivo()==false) {
-        		mAuditoria.mostrarLog(getClass(), "login", "Intento de login usuario desactivado "+idSegUsuario);
-        		throw new Exception("El usuario esta desactivado.");
-        	}
+    		
     		mAuditoria.mostrarLog(getClass(), "login", "Login exitoso "+idSegUsuario);
     		//crear DTO:
     		LoginDTO loginDTO=new LoginDTO();
@@ -164,8 +160,6 @@ public class ManagerSeguridades {
     	SegUsuario usuario=(SegUsuario) mDAO.findById(SegUsuario.class, idSegUsuario);
     	if(idSegUsuario==1)
     		throw new Exception("No se puede desactivar al usuario administrador.");
-    	usuario.setActivo(!usuario.getActivo());
-    	System.out.println("activar/desactivar "+usuario.getActivo());
     	mDAO.actualizar(usuario);
     }
     

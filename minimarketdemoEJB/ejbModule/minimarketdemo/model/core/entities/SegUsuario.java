@@ -20,9 +20,6 @@ public class SegUsuario implements Serializable {
 	@Column(name="id_seg_usuario", unique=true, nullable=false)
 	private Integer idSegUsuario;
 
-	@Column(nullable=false)
-	private Boolean activo;
-
 	@Column(nullable=false, length=50)
 	private String apellidos;
 
@@ -37,6 +34,10 @@ public class SegUsuario implements Serializable {
 
 	@Column(nullable=false, length=50)
 	private String nombres;
+
+	//bi-directional many-to-one association to FactCabecera
+	@OneToMany(mappedBy="segUsuario")
+	private List<FactCabecera> factCabeceras;
 
 	//bi-directional many-to-one association to SegAsignacion
 	@OneToMany(mappedBy="segUsuario")
@@ -55,14 +56,6 @@ public class SegUsuario implements Serializable {
 
 	public void setIdSegUsuario(Integer idSegUsuario) {
 		this.idSegUsuario = idSegUsuario;
-	}
-
-	public Boolean getActivo() {
-		return this.activo;
-	}
-
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
 	}
 
 	public String getApellidos() {
@@ -103,6 +96,28 @@ public class SegUsuario implements Serializable {
 
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
+	}
+
+	public List<FactCabecera> getFactCabeceras() {
+		return this.factCabeceras;
+	}
+
+	public void setFactCabeceras(List<FactCabecera> factCabeceras) {
+		this.factCabeceras = factCabeceras;
+	}
+
+	public FactCabecera addFactCabecera(FactCabecera factCabecera) {
+		getFactCabeceras().add(factCabecera);
+		factCabecera.setSegUsuario(this);
+
+		return factCabecera;
+	}
+
+	public FactCabecera removeFactCabecera(FactCabecera factCabecera) {
+		getFactCabeceras().remove(factCabecera);
+		factCabecera.setSegUsuario(null);
+
+		return factCabecera;
 	}
 
 	public List<SegAsignacion> getSegAsignacions() {

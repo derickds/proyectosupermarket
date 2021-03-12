@@ -10,5 +10,17 @@
 		<class>minimarketdemo.model.core.entities.ThmEmpleado</class>
 		<class>minimarketdemo.model.core.entities.ThmRolCabecera</class>
 		<class>minimarketdemo.model.core.entities.ThmRolDetalle</class>
+		<class>minimarketdemo.model.core.entities.CliPersona</class>
+		<class>minimarketdemo.model.core.entities.FactCabecera</class>
+		<class>minimarketdemo.model.core.entities.FactDescuento</class>
+		<class>minimarketdemo.model.core.entities.FactDetalle</class>
+		<class>minimarketdemo.model.core.entities.InvProducto</class>
+		<class>minimarketdemo.model.core.entities.InvProveedor</class>
+		<class>minimarketdemo.model.core.entities.InvStock</class>
+		<class>minimarketdemo.model.core.entities.PedOrden</class>
+		<class>minimarketdemo.model.core.entities.PedOrdenDetalle</class>
+		<class>minimarketdemo.model.core.entities.RelacCliente</class>
+		<class>minimarketdemo.model.core.entities.RelacMedio</class>
+		<class>minimarketdemo.model.core.entities.VentRegistro</class>
 	</persistence-unit>
 </persistence>

@@ -2,7 +2,6 @@ package minimarketdemo.model.core.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -21,12 +20,6 @@ public class ThmEmpleado implements Serializable {
 	@Column(name="id_thm_empleado", unique=true, nullable=false)
 	private Integer idThmEmpleado;
 
-	@Column(name="cuota_prestamo", nullable=false, precision=7, scale=2)
-	private BigDecimal cuotaPrestamo;
-
-	@Column(name="horas_extra", nullable=false)
-	private Integer horasExtra;
-
 	@Column(name="horas_trabajadas", nullable=false)
 	private Integer horasTrabajadas;
 
@@ -44,6 +37,10 @@ public class ThmEmpleado implements Serializable {
 	@OneToMany(mappedBy="thmEmpleado")
 	private List<ThmRolCabecera> thmRolCabeceras;
 
+	//bi-directional many-to-one association to VentRegistro
+	@OneToMany(mappedBy="thmEmpleado")
+	private List<VentRegistro> ventRegistros;
+
 	public ThmEmpleado() {
 	}
 
@@ -53,22 +50,6 @@ public class ThmEmpleado implements Serializable {
 
 	public void setIdThmEmpleado(Integer idThmEmpleado) {
 		this.idThmEmpleado = idThmEmpleado;
-	}
-
-	public BigDecimal getCuotaPrestamo() {
-		return this.cuotaPrestamo;
-	}
-
-	public void setCuotaPrestamo(BigDecimal cuotaPrestamo) {
-		this.cuotaPrestamo = cuotaPrestamo;
-	}
-
-	public Integer getHorasExtra() {
-		return this.horasExtra;
-	}
-
-	public void setHorasExtra(Integer horasExtra) {
-		this.horasExtra = horasExtra;
 	}
 
 	public Integer getHorasTrabajadas() {
@@ -115,6 +96,28 @@ public class ThmEmpleado implements Serializable {
 		thmRolCabecera.setThmEmpleado(null);
 
 		return thmRolCabecera;
+	}
+
+	public List<VentRegistro> getVentRegistros() {
+		return this.ventRegistros;
+	}
+
+	public void setVentRegistros(List<VentRegistro> ventRegistros) {
+		this.ventRegistros = ventRegistros;
+	}
+
+	public VentRegistro addVentRegistro(VentRegistro ventRegistro) {
+		getVentRegistros().add(ventRegistro);
+		ventRegistro.setThmEmpleado(this);
+
+		return ventRegistro;
+	}
+
+	public VentRegistro removeVentRegistro(VentRegistro ventRegistro) {
+		getVentRegistros().remove(ventRegistro);
+		ventRegistro.setThmEmpleado(null);
+
+		return ventRegistro;
 	}
 
 }

@@ -44,7 +44,6 @@ public class BeanSegUsuarios implements Serializable {
 	
 	public String actionMenuNuevoUsuario() {
 		nuevoUsuario=new SegUsuario();
-		nuevoUsuario.setActivo(true);
 		return "usuarios_nuevo";
 	}
 	
@@ -53,7 +52,6 @@ public class BeanSegUsuarios implements Serializable {
 			managerSeguridades.insertarUsuario(nuevoUsuario);
 			listaUsuarios=managerSeguridades.findAllUsuarios();
 			nuevoUsuario=new SegUsuario();
-			nuevoUsuario.setActivo(true);
 			JSFUtil.crearMensajeINFO("Usuario insertado.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
