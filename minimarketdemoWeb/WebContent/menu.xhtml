@@ -41,7 +41,16 @@
 						</p:commandLink>
 					</p:dataViewGridItem>
 					
-			
+					<p:dataViewListItem>
+					<p:commandLink
+							action="#{beanSegLogin.actionMenu(modulo.rutaAcceso)}">
+							<p:panelGrid columns="1">
+								<h:outputText value="#{modulo.nombreModulo}" />
+								<h:outputText value="#{modulo.rutaAcceso}" />
+								<i class="pi pi-slack" style="font-size: 2rem"></i>
+							</p:panelGrid>
+						</p:commandLink>
+				</p:dataViewListItem>
 				</p:dataView>
 			</p:panel>
 		</h:form>
