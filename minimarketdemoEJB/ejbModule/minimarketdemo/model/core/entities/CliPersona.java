@@ -16,7 +16,6 @@ public class CliPersona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="cedula_cli_persona", unique=true, nullable=false, length=13)
 	private String cedulaCliPersona;
 
