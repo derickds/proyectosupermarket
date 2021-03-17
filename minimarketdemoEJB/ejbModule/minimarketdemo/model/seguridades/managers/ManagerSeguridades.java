@@ -21,7 +21,7 @@ import minimarketdemo.model.seguridades.dtos.LoginDTO;
  * 	<li>Verificacion de credenciales de usuario.</li>
  *  <li>Asignacion de modulos a un usuario.</li>
  * </ul>
- * @author mrea
+ * @author john
  */
 @Stateless
 @LocalBean
