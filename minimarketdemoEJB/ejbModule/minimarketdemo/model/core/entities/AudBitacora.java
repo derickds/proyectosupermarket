@@ -2,7 +2,7 @@ package minimarketdemo.model.core.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -26,9 +26,8 @@ public class AudBitacora implements Serializable {
 	@Column(name="direccion_ip", nullable=false, length=100)
 	private String direccionIp;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_evento", nullable=false)
-	private Date fechaEvento;
+	private Timestamp fechaEvento;
 
 	@Column(name="id_usuario", nullable=false, length=100)
 	private String idUsuario;
@@ -66,11 +65,11 @@ public class AudBitacora implements Serializable {
 		this.direccionIp = direccionIp;
 	}
 
-	public Date getFechaEvento() {
+	public Timestamp getFechaEvento() {
 		return this.fechaEvento;
 	}
 
-	public void setFechaEvento(Date fechaEvento) {
+	public void setFechaEvento(Timestamp fechaEvento) {
 		this.fechaEvento = fechaEvento;
 	}
 
