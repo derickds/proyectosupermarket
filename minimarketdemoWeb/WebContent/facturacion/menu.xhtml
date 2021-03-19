@@ -18,6 +18,8 @@
 				action="/menu?faces-redirect=true" />
 			<p:menuitem value="Descuentos" icon="pi pi-tag"
 			action="#{beanFactDescuentos.actionCargarMenuDescuentos()}"/>
+			<p:menuitem value="Detalles Factura" icon="pi pi-tag"
+			action="#{beanFactDetalleFactura.actionCargarMenuDetalle()}"/>
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">

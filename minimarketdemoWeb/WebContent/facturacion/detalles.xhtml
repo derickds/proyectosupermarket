@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Facturación</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+		<h:form>
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+						value="#{beanFactDetalleFactura.idFactCabecera}">
+						<f:selectItem itemLabel="Seleccione el id de la Factura..."
+							noSelectionOption="true" />
+						<f:selectItems value="#{beanFactDetalleFactura.listaCabecera}"
+							var="u" itemLabel="#{u.idFactCabecera}"
+							itemValue="#{u.idFactCabecera}"></f:selectItems>
+						<p:ajax update="@form"
+							listener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}"></p:ajax>
+					</p:selectOneMenu>
+			<p:commandButton update="@form" value="Consultar" icon="pi pi-clock"
+				actionListener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}" />
+			<p:dataTable value="#{beanFactDetalleFactura.listaDetalles}" var="b"
+				emptyMessage="No hay registros aún." paginator="true" rows="30">
+				<p:column headerText="ID" style="width:50px">
+					<h:outputText value="#{b.idFactDetalle}" />
+				</p:column>
+				<p:column headerText="PRODUCTO">
+					<h:outputText value="#{b.invProducto.nombreProducto}" />
+				</p:column>
+				<p:column headerText="ID FACTURA">
+					<h:outputText value="#{b.factCabecera.idFactCabecera}" />
+				</p:column>
+				<p:column headerText="CLIENTE">
+					<h:outputText value="#{b.factCabecera.cliPersona.apellidosPersona}" />
+				</p:column>
+				<p:column headerText="COSTO UNITARIO">
+					<h:outputText value="#{b.costoUnitarioDetalle}" />
+				</p:column>
+				<p:column headerText="CANTIDAD">
+					<h:outputText value="#{b.cantidadDetalle}" />
+				</p:column>
+				<p:column headerText="SUBTOTAL">
+					<h:outputText value="#{b.subTotalDetalle}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+</body>
+</html>

@@ -7,6 +7,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.FactCabecera;
 import minimarketdemo.model.core.entities.FactDescuento;
 import minimarketdemo.model.core.entities.FactDetalle;
 import minimarketdemo.model.core.entities.RelacMedio;
@@ -29,11 +30,19 @@ public class ManagerFacturacion {
         // TODO Auto-generated constructor stub
     }
     
+  //Manejo Cabecera Factura *********************************************************************************
+    public List<FactCabecera> findAllCabecerasFactura(){
+    	return mDAO.findAll(FactCabecera.class, null);
+    }
+    
     //Manejo Detalle Factura *********************************************************************************
     public List<FactDetalle> findAllDetallesFactura(){
     	return mDAO.findAll(FactDetalle.class, null);
     }
     
+    public List<FactDetalle> findDetallesFacturaByIdCabecera(int idCabecera){
+    	return mDAO.findWhere(FactDetalle.class, "id_fact_cabecera="+idCabecera, null);
+    }
     //MANEJO DESCUENTOS *********************************************************************************
     //Listado de todos los descuentos
     public List<FactDescuento> findAllDescuentos(){
