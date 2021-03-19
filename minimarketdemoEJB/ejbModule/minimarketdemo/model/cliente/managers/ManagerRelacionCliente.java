@@ -1,4 +1,4 @@
-package minimarketdemo.model.relacioncliente.managers;
+package minimarketdemo.model.cliente.managers;
 
 import java.util.List;
 

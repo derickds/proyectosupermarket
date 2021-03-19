@@ -1,4 +1,4 @@
-package minimarketdemo.controller.relacioncliente;
+package minimarketdemo.controller.cliente;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,9 +9,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
-import minimarketdemo.model.core.entities.RelacCliente;
+import minimarketdemo.model.cliente.managers.ManagerRelacionCliente;
 import minimarketdemo.model.core.entities.RelacMedio;
-import minimarketdemo.model.relacioncliente.managers.ManagerRelacionCliente;
 
 @Named
 @SessionScoped
