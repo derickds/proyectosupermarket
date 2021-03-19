@@ -43,6 +43,7 @@ public class BeanVenta implements Serializable {
 	///me falta factdetalle/////
 	public String actionCargarMenuVentas() {
 		listaUsuarios=mSeguridades.findAllUsuarios();
+		listafactdetalle =managerVenta.findAllFactDetalle();
 		listaVenta = managerVenta.findAllVenta();
 		return "ventas?faces-redirect=true";
 	}
@@ -93,6 +94,14 @@ public class BeanVenta implements Serializable {
 
 	public void setIdFactDetalle(int idFactDetalle) {
 		this.idFactDetalle = idFactDetalle;
+	}
+
+	public List<FactDetalle> getListafactdetalle() {
+		return listafactdetalle;
+	}
+
+	public void setListafactdetalle(List<FactDetalle> listafactdetalle) {
+		this.listafactdetalle = listafactdetalle;
 	}
 
 }

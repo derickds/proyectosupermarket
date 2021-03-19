@@ -28,22 +28,20 @@
 	</h:form>
 	
 	<h:form id="formDatos">
-			<p:dataTable emptyMessage="No hay registros aún." value="#{beanVenta.listaEmpleados}" var="e">
-				<p:column headerText="ID" style="width:40px">
-					<h:outputText value="#{e.idThmEmpleado}" />
+			<p:dataTable emptyMessage="No hay registros aún." value="#{beanVenta.listaVenta}" var="e">
+			<p:column headerText="ID VENTA REGISTRO">
+					<h:outputText value="#{e.idVentRegistro}" />
 				</p:column>
-				<p:column headerText="NOMBRE EMPLEADO">
-					<h:outputText value="#{e.segUsuario.apellidos} #{e.segUsuario.nombres}" />
+				<p:column headerText="ID FACTURA DETALLE">
+					<h:outputText value="#{e.factDetalle.idFactDetalle}" />
 				</p:column>
-				<p:column headerText="CARGO">
-					<h:outputText value="#{e.thmCargo.nombreCargo}" />
+				<p:column headerText="ID THM EMPLEADO">
+					<h:outputText value="#{e.thmEmpleado.idThmEmpleado}" />
 				</p:column>
-				<p:column headerText="RMU">
-					<h:outputText value="#{e.thmCargo.remuneracionMensual}" />
+				<p:column headerText="MENSAJE REGISTRO">
+					<h:outputText value="#{e.mensajeRegistro}" />
 				</p:column>
-				<p:column headerText="H_TRABJ">
-					<h:outputText value="#{e.horasTrabajadas}" />
-				</p:column>
+				
 				
 			</p:dataTable>
 		</h:form>
