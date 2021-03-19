@@ -18,6 +18,10 @@
 				action="/menu?faces-redirect=true" />
 			<p:menuitem value="Clientes" icon="pi pi-user"
 			action="#{beanCliPersona.actionCargarMenuCliPersona()}"/>
+			<p:menuitem value="Relacion Clientes" icon="pi pi-user"
+			action="#{beanRelacCliente.actionCargarMenuRelacion()}"/>
+			<p:menuitem value="Medio de Relacion" icon="pi pi-user"
+			action="#{beanRelacMedio.actionCargarMenuMedios()}"/>
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
