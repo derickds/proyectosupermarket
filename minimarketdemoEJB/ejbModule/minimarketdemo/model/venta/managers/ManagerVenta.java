@@ -44,7 +44,7 @@ public class ManagerVenta {
     public List<ThmEmpleado> findAllThmEmpleado(){
     	return mDAO.findAll(ThmEmpleado.class, "horasTrabajadas");
     }
-    ///factura_detalles
+    ///factura_detalles:
     public FactDetalle findByidFactDetalle(int idFactDetalle) throws Exception{
     	return (FactDetalle)mDAO.findById(FactDetalle.class, idFactDetalle);
     }
