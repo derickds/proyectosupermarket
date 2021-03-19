@@ -1,5 +1,6 @@
 package minimarketdemo.model.facturacion.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,6 +11,8 @@ import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.FactCabecera;
 import minimarketdemo.model.core.entities.FactDescuento;
 import minimarketdemo.model.core.entities.FactDetalle;
+import minimarketdemo.model.core.entities.InvProducto;
+import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.RelacMedio;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.managers.ManagerDAO;
@@ -33,6 +36,43 @@ public class ManagerFacturacion {
   //Manejo Cabecera Factura *********************************************************************************
     public List<FactCabecera> findAllCabecerasFactura(){
     	return mDAO.findAll(FactCabecera.class, null);
+    }
+    
+    public List<InvStock> findAllProductosDisponibles(){
+    	List<InvStock> listaStock = mDAO.findAll(InvStock.class, null);
+    	List<InvStock> listaStock2 = new ArrayList<InvStock>();
+    	
+    	for(InvStock productoStock: listaStock) {
+    		if(productoStock.getCantidadStockProducto()>0) {
+    			listaStock2.add(productoStock);
+    		}
+    	}
+    	return listaStock;
+    }
+    
+    public List<InvStock> agregarProductoCarrito(List<InvStock> carrito, InvStock p){
+    	if(carrito==null) {
+    		carrito = new ArrayList<InvStock>();
+    	}else {
+    		carrito.add(p);
+    	}
+    	return carrito;
+    }
+    
+    public List<InvStock> eliminarProductoCarrito(List<InvStock> carrito, int codigoProducto){
+    	if(carrito==null) {
+    		return null;
+    	}else {
+    		int i = 0;
+    		for(InvStock p:carrito) {
+    			if(p.getIdInvStock()==codigoProducto) {
+        			carrito.remove(i);	
+        			break;
+    			}
+    			i++;
+    		}
+    	}
+    	return carrito;
     }
     
     //Manejo Detalle Factura *********************************************************************************

@@ -39,7 +39,9 @@
 							itemValue="#{u.idFactCabecera}"></f:selectItems>
 						<p:ajax update="@form"
 							listener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}"></p:ajax>
-					</p:selectOneMenu>
+			</p:selectOneMenu>
+			<p:inputText value="#{beanFactDetalleFactura.idFactCabecera}"
+							 requiredMessage="Ingrese el id de la factura" />
 			<p:commandButton update="@form" value="Consultar" icon="pi pi-clock"
 				actionListener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}" />
 			<p:dataTable value="#{beanFactDetalleFactura.listaDetalles}" var="b"
