@@ -40,7 +40,7 @@ public class BeanVenta implements Serializable {
 		System.out.println("BeanVentas inicializado...");
 		nuevoVenta = new VentRegistro();
 	}
-	/// falta factdetalle utilizado/////
+	/// falta factdetalle utilizado://///
 	public String actionCargarMenuVentas() {
 		listaUsuarios=mSeguridades.findAllUsuarios();
 		listafactdetalle =managerVenta.findAllFactDetalle();

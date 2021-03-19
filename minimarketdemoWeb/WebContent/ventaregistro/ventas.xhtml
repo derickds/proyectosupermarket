@@ -29,16 +29,16 @@
 	
 	<h:form id="formDatos">
 			<p:dataTable emptyMessage="No hay registros aún." value="#{beanVenta.listaVenta}" var="e">
-			<p:column headerText="ID VENTA REGISTRO">
+			<p:column headerText="ID VENTA REGISTRO:">
 					<h:outputText value="#{e.idVentRegistro}" />
 				</p:column>
-				<p:column headerText="ID FACTURA DETALLES">
+				<p:column headerText="ID FACTURA DETALLES:">
 					<h:outputText value="#{e.factDetalle.idFactDetalle}" />
 				</p:column>
-				<p:column headerText="ID THM EMPLEADOS">
+				<p:column headerText="ID THM EMPLEADOS:">
 					<h:outputText value="#{e.thmEmpleado.idThmEmpleado}" />
 				</p:column>
-				<p:column headerText="MENSAJE REGISTRO">
+				<p:column headerText="MENSAJE REGISTRO:">
 					<h:outputText value="#{e.mensajeRegistro}" />
 				</p:column>
 				
