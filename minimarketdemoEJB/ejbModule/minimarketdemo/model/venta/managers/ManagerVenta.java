@@ -33,18 +33,18 @@ public class ManagerVenta {
      * @param nombreMetodo Metodo que genera el mensaje para depuracion.
      * @param mensaje El mensaje a desplegar.
      */
-    //Ventas registro:
+    //Ventas registros:
     public List<VentRegistro> findAllVenta(){
     	return mDAO.findAll(VentRegistro.class);
     }
-    ///empleado
+    ///thm_empleados:
     public ThmEmpleado findByIdThmEmpleado(int idThmEmpleado) throws Exception {
     	return (ThmEmpleado) mDAO.findById(ThmEmpleado.class, idThmEmpleado);
     }
     public List<ThmEmpleado> findAllThmEmpleado(){
     	return mDAO.findAll(ThmEmpleado.class, "horasTrabajadas");
     }
-    ///fac_detalle
+    ///factura_detalles
     public FactDetalle findByidFactDetalle(int idFactDetalle) throws Exception{
     	return (FactDetalle)mDAO.findById(FactDetalle.class, idFactDetalle);
     }
