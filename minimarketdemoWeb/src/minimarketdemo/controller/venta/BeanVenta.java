@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.model.core.entities.FactDetalle;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.entities.ThmEmpleado;
@@ -28,8 +29,9 @@ public class BeanVenta implements Serializable {
 	private List<ThmEmpleado> listaEmpleados;
 	private List<SegUsuario> listaUsuarios;
 	private List<FactDetalle> listafactdetalle;
-	private int idSegUsuario;
+	private int idThmEmpleado;
 	private int idFactDetalle;
+	private String mensajeregistro;
 
 	public BeanVenta() {
 
@@ -40,13 +42,39 @@ public class BeanVenta implements Serializable {
 		System.out.println("BeanVentas inicializado...");
 		nuevoVenta = new VentRegistro();
 	}
-	/// factdetalle utilizado:..../////
-	public String actionCargarMenuVentas() {
-		listaUsuarios=mSeguridades.findAllUsuarios();
+	public String actionCargarMenuVenta() {
+		listaVenta=managerVenta.findAllVenta();
+		return "ventas";
+	}
+	
+	public  void actionListenerConsultarVentas() {
+		listaVenta=managerVenta.findAllVentas();
+	}
+	public String actionCargarMenuNuevoVenta() {
+		nuevoVenta = new VentRegistro();
+		listaEmpleados=managerVenta.findAllThmEmpleado();
 		listafactdetalle =managerVenta.findAllFactDetalle();
-		listaVenta = managerVenta.findAllVenta();
 		return "ventas?faces-redirect=true";
 	}
+	
+	
+	/////no se utiliza este metodo....
+	public void actionListenerRegistroVenta() {
+		try {
+			managerVenta.registroventa(nuevoVenta);
+			listaVenta=managerVenta.findAllVenta();
+			JSFUtil.crearMensajeINFO("venta creada");
+			nuevoVenta=new VentRegistro();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+			
+		}
+	}
+	/// factdetalle utilizado:..../////
+	
 
 	public VentRegistro getNuevoVenta() {
 		return nuevoVenta;
@@ -79,13 +107,13 @@ public class BeanVenta implements Serializable {
 	public void setListaUsuarios(List<SegUsuario> listaUsuarios) {
 		this.listaUsuarios = listaUsuarios;
 	}
-
-	public int getIdSegUsuario() {
-		return idSegUsuario;
+	
+	public int getIdThmEmpleado() {
+		return idThmEmpleado;
 	}
 
-	public void setIdSegUsuario(int idSegUsuario) {
-		this.idSegUsuario = idSegUsuario;
+	public void setIdThmEmpleado(int idThmEmpleado) {
+		this.idThmEmpleado = idThmEmpleado;
 	}
 
 	public int getIdFactDetalle() {
@@ -103,5 +131,14 @@ public class BeanVenta implements Serializable {
 	public void setListafactdetalle(List<FactDetalle> listafactdetalle) {
 		this.listafactdetalle = listafactdetalle;
 	}
+
+	public String getMensajeregistro() {
+		return mensajeregistro;
+	}
+
+	public void setMensajeregistro(String mensajeregistro) {
+		this.mensajeregistro = mensajeregistro;
+	}
+
 
 }

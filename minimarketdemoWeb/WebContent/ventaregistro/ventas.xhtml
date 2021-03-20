@@ -27,23 +27,28 @@
 		</p:menubar>
 	</h:form>
 	
-	<h:form id="formDatos">
-			<p:dataTable emptyMessage="No hay registros aún." value="#{beanVenta.listaVenta}" var="e">
-			<p:column headerText="ID VENTA REGISTRO:--">
-					<h:outputText value="#{e.idVentRegistro}" />
+<p:panel>
+		<p:commandButton value="Consultar ventas"
+                             actionListener="#{beanVenta.actionListenerConsultarVentas()}"/>
+
+		<h:form id="formDatos">
+			<p:dataTable emptyMessage="No hay registros aún." value="#{beanVenta.listaVenta}" var="ve">
+				<p:column headerText="ID VENTA REGISTRO">
+					<h:outputText value="#{ve.idVentRegistro}" />
 				</p:column>
-				<p:column headerText="ID FACTURA DETALLES:--">
-					<h:outputText value="#{e.factDetalle.idFactDetalle}" />
+				<p:column headerText="ID FACTURA DETALLE">
+					<h:outputText value="#{ve.factDetalle.idFactDetalle}" />
 				</p:column>
-				<p:column headerText="ID THM EMPLEADOS:--">
-					<h:outputText value="#{e.thmEmpleado.idThmEmpleado}" />
+				<p:column headerText="ID THM EMPLEADO">
+					<h:outputText value="#{ve.thmEmpleado.idThmEmpleado}" />
 				</p:column>
-				<p:column headerText="MENSAJE REGISTROS:--">
-					<h:outputText value="#{e.mensajeRegistro}" />
+				<p:column headerText="MENSAJE DE REGISTRO">
+					<h:outputText value="#{ve.mensajeRegistro}" />
 				</p:column>
-				
 				
 			</p:dataTable>
 		</h:form>
+	</p:panel>
+	
 </body> 
 </html>
