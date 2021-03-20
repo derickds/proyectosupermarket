@@ -32,33 +32,41 @@
 	<p:panel>
 		<h:form>
 			<p:panel header="Datos de Productos">
-				<p:dataGrid value="#{beanFactFacturacion.listaProductosStock}" var="p">
+				<p:inputText value="#{beanFactFacturacion.idStock}" />
+				<p:commandButton value="Buscar" update="@form"
+					actionListener="#{beanFactFacturacion.actionListenerBuscarStockProducto()}" />
+				<p:dataGrid value="#{beanFactFacturacion.listaProductosStock}"
+					var="p" paginator="true" rows="10">
 					<p:panel header="producto">
-							<h:panelGrid columns="2">
-								<h:outputText value="ID:" />
-								<h:outputText value="#{p.idInvStock}" />
-								<h:outputText value="Nombre:" />
-								<h:outputText value="#{p.invProducto.nombreProducto}" />
-								<h:outputText value="Precio:" />
-								<h:outputText value="#{p.invProducto.precio}" />
-								<p:commandButton value="Agregar" update="@form"
-								 actionListener="#{beanFactFacturacion.actionListenerAgregarProducto(p)}"/>
-							</h:panelGrid>
+						<h:panelGrid columns="2">
+							<h:outputText value="ID:" />
+							<h:outputText value="#{p.idInvStock}" />
+							<h:outputText value="Nombre:" />
+							<h:outputText value="#{p.invProducto.nombreProducto}" />
+							<h:outputText value="Precio:" />
+							<h:outputText value="#{p.invProducto.precio}" />
+							<p:commandButton value="Agregar" update="@form"
+								actionListener="#{beanFactFacturacion.actionListenerAgregarProducto(p)}" />
+						</h:panelGrid>
 					</p:panel>
 				</p:dataGrid>
-				<p:dataTable value="#{beanFactFacturacion.carrito}" var="p">
+				<p:dataTable value="#{beanFactFacturacion.carrito}" var="p"
+					paginator="true" rows="10">
 					<p:column headerText="ID">
-						<h:outputText value="#{p.idInvStock}" />
+						<h:outputText value="#{p.idStock}" />
 					</p:column>
 					<p:column headerText="NOMBRE">
-						<h:outputText value="#{p.invProducto.nombreProducto}" />
+						<h:outputText value="#{p.nombreProducto}" />
 					</p:column>
 					<p:column headerText="PRECIO">
-						<h:outputText value="#{p.invProducto.precio}" />
+						<h:outputText value="#{p.precio}" />
+					</p:column>
+					<p:column headerText="CANTIDAD">
+						<h:outputText value="#{p.cantidadCompra}" />
 					</p:column>
 					<p:column>
-						<p:commandButton value="Eliminar" update="@form" 
-						actionListener="#{beanFactFacturacion.actionListenerEliminarProducto(p)}"/>
+						<p:commandButton value="Eliminar" update="@form"
+							actionListener="#{beanFactFacturacion.actionListenerEliminarProducto(p)}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>
