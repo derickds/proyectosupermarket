@@ -1,5 +1,6 @@
 package minimarketdemo.model.facturacion.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -7,11 +8,15 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.FactCabecera;
 import minimarketdemo.model.core.entities.FactDescuento;
 import minimarketdemo.model.core.entities.FactDetalle;
+import minimarketdemo.model.core.entities.InvProducto;
+import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.RelacMedio;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.managers.ManagerDAO;
+import minimarketdemo.model.facturacion.dtos.carritoDTO;
 
 /**
  * Session Bean implementation class ManagerFacturacion
@@ -29,11 +34,70 @@ public class ManagerFacturacion {
         // TODO Auto-generated constructor stub
     }
     
+  //Manejo Cabecera Factura *********************************************************************************
+    public List<FactCabecera> findAllCabecerasFactura(){
+    	return mDAO.findAll(FactCabecera.class, null);
+    }
+    
+    public List<InvStock> findAllProductosDisponibles(){
+    	List<InvStock> listaStock = mDAO.findAll(InvStock.class, null);
+    	List<InvStock> listaStock2 = new ArrayList<InvStock>();
+    	
+    	for(InvStock productoStock: listaStock) {
+    		if(productoStock.getCantidadStockProducto()>0) {
+    			listaStock2.add(productoStock);
+    		}
+    	}
+    	return listaStock;
+    }
+    
+    public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p){
+    	if(carrito==null) {
+    		carrito = new ArrayList<carritoDTO>();
+    	}else {
+    		carritoDTO carritodto = new carritoDTO(
+    				p.getIdInvStock(),
+    				1,
+    				p.getInvProducto().getIdInvProducto(),
+    				p.getInvProducto().getNombreProducto(),
+    				 p.getInvProducto().getPrecio().doubleValue());
+    		carrito.add(carritodto);
+    	}
+    	return carrito;
+    }
+    
+    public List<carritoDTO> eliminarProductoCarrito(List<carritoDTO> carrito, int codigoProducto){
+    	if(carrito==null) {
+    		return null;
+    	}else {
+    		int i = 0;
+    		for(carritoDTO p:carrito) {
+    			if(p.getIdStock()==codigoProducto) {
+        			carrito.remove(i);	
+        			break;
+    			}
+    			i++;
+    		}
+    	}
+    	return carrito;
+    }
+    
+    public List<InvStock> findProductoStockWhere(int idStock){
+    	if(idStock==0) {
+    		return findAllProductosDisponibles();
+    	}else {
+    	return mDAO.findWhere(InvStock.class, "id_inv_stock="+idStock, null);
+    	}
+    }
+    
     //Manejo Detalle Factura *********************************************************************************
     public List<FactDetalle> findAllDetallesFactura(){
     	return mDAO.findAll(FactDetalle.class, null);
     }
     
+    public List<FactDetalle> findDetallesFacturaByIdCabecera(int idCabecera){
+    	return mDAO.findWhere(FactDetalle.class, "id_fact_cabecera="+idCabecera, null);
+    }
     //MANEJO DESCUENTOS *********************************************************************************
     //Listado de todos los descuentos
     public List<FactDescuento> findAllDescuentos(){

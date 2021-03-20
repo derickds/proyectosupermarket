@@ -9,7 +9,7 @@
 		type="preRenderView"></f:event>
 </f:metadata>
 <h:head>
-	<title>Facturació</title>
+	<title>Facturación</title>
 </h:head>
 <body>
 	<h:form>
@@ -18,6 +18,10 @@
 				action="/menu?faces-redirect=true" />
 			<p:menuitem value="Descuentos" icon="pi pi-tag"
 			action="#{beanFactDescuentos.actionCargarMenuDescuentos()}"/>
+			<p:menuitem value="Detalles Factura" icon="pi pi-list"
+			action="#{beanFactDetalleFactura.actionCargarMenuDetalle()}"/>
+			<p:menuitem value="Facturación" icon="pi pi-list"
+			action="#{beanFactFacturacion.actionCargarFacturar()}"/>
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">

@@ -92,10 +92,16 @@ public class ManagerSeguridades {
      * Funcion de autenticacion mediante el uso de credenciales.
      * @param idSegUsuario El codigo del usuario que desea autenticarse.
      * @param clave La contrasenia.
+     * @param direccionIP La dirección IP V$ del cliente web.
      * @return La ruta de acceso al sistema.
      * @throws Exception
      */
-    public LoginDTO login(int idSegUsuario,String clave) throws Exception{
+    public LoginDTO login(int idSegUsuario,String clave, String direccionIP) throws Exception{
+    	//crear DTO:
+		LoginDTO loginDTO=new LoginDTO();
+		loginDTO.setIdSegUsuario(idSegUsuario);
+		loginDTO.setDireccionIP(direccionIP);
+		
     	if(ModelUtil.isEmpty(clave)) {
     		mAuditoria.mostrarLog(getClass(), "login", "Debe indicar una clave "+idSegUsuario);
     		throw new Exception("Debe indicar una clave");
@@ -107,12 +113,11 @@ public class ManagerSeguridades {
     	}
     		
     	if(usuario.getClave().equals(clave)) {
-    		
-    		mAuditoria.mostrarLog(getClass(), "login", "Login exitoso "+idSegUsuario);
-    		//crear DTO:
-    		LoginDTO loginDTO=new LoginDTO();
-    		loginDTO.setIdSegUsuario(usuario.getIdSegUsuario());
+    		mAuditoria.mostrarLog(loginDTO,getClass(), "login", "Login exitoso: "+idSegUsuario);
     		loginDTO.setCorreo(usuario.getCorreo());
+    		//aqui puede realizarse el envio de correo de notificacion
+    		
+    		
     		//obtener la lista de modulos a los que tiene acceso:
     		List<SegAsignacion> listaAsignaciones=findAsignacionByUsuario(usuario.getIdSegUsuario());
     		for(SegAsignacion asig:listaAsignaciones) {
@@ -126,7 +131,7 @@ public class ManagerSeguridades {
     }
     
     public void cerrarSesion(int idSegUsuario) {
-    	mAuditoria.mostrarLog(getClass(), "cerrarSesion", "Cerrar sesiÃ³n usuario: "+idSegUsuario);
+    	mAuditoria.mostrarLog(getClass(), "cerrarSesion", "Cerrar sesiónn usuario: "+idSegUsuario);
     }
     
     public void accesoNoPermitido(int idSegUsuario,String ruta) {
@@ -146,7 +151,7 @@ public class ManagerSeguridades {
     	mDAO.insertar(nuevoUsuario);
     }
     
-    public void actualizarUsuario(SegUsuario edicionUsuario) throws Exception {
+    public void actualizarUsuario(LoginDTO loginDTO, SegUsuario edicionUsuario) throws Exception {
     	SegUsuario usuario=(SegUsuario) mDAO.findById(SegUsuario.class, edicionUsuario.getIdSegUsuario());
     	usuario.setApellidos(edicionUsuario.getApellidos());
     	usuario.setClave(edicionUsuario.getClave());
@@ -154,6 +159,7 @@ public class ManagerSeguridades {
     	usuario.setCodigo(edicionUsuario.getCodigo());
     	usuario.setNombres(edicionUsuario.getNombres());
     	mDAO.actualizar(usuario);
+    	mAuditoria.mostrarLog(loginDTO,getClass(), "actualizarUsuario", "Usuario actualizado por: "+loginDTO.getIdSegUsuario());
     }
     
     public void activarDesactivarUsuario(int idSegUsuario) throws Exception {
