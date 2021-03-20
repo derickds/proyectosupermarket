@@ -42,39 +42,39 @@ public class BeanVenta implements Serializable {
 		System.out.println("BeanVentas inicializado...");
 		nuevoVenta = new VentRegistro();
 	}
+
 	public String actionCargarMenuVenta() {
-		listaVenta=managerVenta.findAllVenta();
+		listaVenta = managerVenta.findAllVenta();
 		return "ventas";
 	}
-	
-	public  void actionListenerConsultarVentas() {
-		listaVenta=managerVenta.findAllVentas();
+
+	public void actionListenerConsultarVentas() {
+		listaVenta = managerVenta.findAllVentas();
 	}
+
 	public String actionCargarMenuNuevoVenta() {
 		nuevoVenta = new VentRegistro();
-		listaEmpleados=managerVenta.findAllThmEmpleado();
-		listafactdetalle =managerVenta.findAllFactDetalle();
+		listaEmpleados = managerVenta.findAllThmEmpleado();
+		listafactdetalle = managerVenta.findAllFactDetalle();
 		return "ventas?faces-redirect=true";
 	}
-	
-	
-	/////no se utiliza este metodo....
+
+	///// no se utiliza este metodo....
 	public void actionListenerRegistroVenta() {
 		try {
 			managerVenta.registroventa(nuevoVenta);
-			listaVenta=managerVenta.findAllVenta();
+			listaVenta = managerVenta.findAllVenta();
 			JSFUtil.crearMensajeINFO("venta creada");
-			nuevoVenta=new VentRegistro();
-			
+			nuevoVenta = new VentRegistro();
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();
-			
+
 		}
 	}
 	/// factdetalle utilizado:..../////
-	
 
 	public VentRegistro getNuevoVenta() {
 		return nuevoVenta;
@@ -107,7 +107,7 @@ public class BeanVenta implements Serializable {
 	public void setListaUsuarios(List<SegUsuario> listaUsuarios) {
 		this.listaUsuarios = listaUsuarios;
 	}
-	
+
 	public int getIdThmEmpleado() {
 		return idThmEmpleado;
 	}
@@ -139,6 +139,5 @@ public class BeanVenta implements Serializable {
 	public void setMensajeregistro(String mensajeregistro) {
 		this.mensajeregistro = mensajeregistro;
 	}
-
 
 }
