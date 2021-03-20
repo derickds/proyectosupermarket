@@ -34,7 +34,7 @@ public class ManagerFacturacion {
         // TODO Auto-generated constructor stub
     }
     
-  //Manejo Cabecera Factura *********************************************************************************
+  //Manejo Cabecera Factura  *********************************************************************************
     public List<FactCabecera> findAllCabecerasFactura(){
     	return mDAO.findAll(FactCabecera.class, null);
     }
@@ -54,6 +54,13 @@ public class ManagerFacturacion {
     public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p,int cantidad)  throws Exception{
     	if(carrito==null) {
     		carrito = new ArrayList<carritoDTO>();
+    		carritoDTO carritodto = new carritoDTO(
+    				p.getIdInvStock(),
+    				cantidad,
+    				p.getInvProducto().getIdInvProducto(),
+    				p.getInvProducto().getNombreProducto(),
+    				 p.getInvProducto().getPrecio().doubleValue());
+    		carrito.add(carritodto);
     	}else if(p.getCantidadStockProducto()==0){
     		throw new Exception("Producto sin stock");
     	}else {

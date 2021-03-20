@@ -30,7 +30,7 @@
 		</p:menubar>
 	</h:form>
 	<p:panel>
-		<h:form>
+		<h:form id="formDatos">
 			<p:panel>
 
 			</p:panel>
@@ -86,7 +86,7 @@
 				<h:outputText value="Cantidad de productos" />
 				<p:spinner value="#{beanFactFacturacion.cantidad}" min="0" stepFactor="1" max="#{beanFactFacturacion.compra.cantidadStockProducto}">
 				</p:spinner>
-				<p:commandButton value="Asignar" icon="pi pi-save" update="@form"
+				<p:commandButton value="Asignar" icon="pi pi-save" update="@form,:formDatos"
 				actionListener="#{beanFactFacturacion.actionListenerAgregarProducto()}"></p:commandButton>
 			</p:panelGrid>
 		</h:form>
