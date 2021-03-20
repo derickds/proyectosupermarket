@@ -87,7 +87,7 @@ public class ManagerInventario {
     }
     
     public void actualizarProducto(InvProducto edicionProducto) throws Exception {
-    	InvProducto producto=(InvProducto) mDAO.findById(InvProducto.class, edicionProducto.getIdInvProducto());
+    	InvProducto producto= (InvProducto) mDAO.findById(InvProducto.class, edicionProducto.getIdInvProducto());
     	producto.setIdInvProducto(edicionProducto.getIdInvProducto());
     	producto.setInvProveedor(edicionProducto.getInvProveedor());
     	producto.setNombreProducto(edicionProducto.getNombreProducto());

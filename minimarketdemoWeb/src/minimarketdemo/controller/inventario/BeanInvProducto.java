@@ -24,7 +24,7 @@ public class BeanInvProducto implements Serializable {
 	@EJB
 	private ManagerInventario managerInventario;
 	
-	private List<InvProducto> listaproducto;
+	private List<InvProducto> listaproducto ;
 	private List<InvProveedor> listaProveedor;
 	
 	private InvProducto nuevoProducto;

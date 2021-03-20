@@ -93,7 +93,7 @@ public class BeanInvProveedor implements Serializable {
 		try {
 			managerInventario.insertarProveedor(nuevoProveedor);
 			listaProveedor=managerInventario.findAllProveedor();
-			nuevoProveedor=new InvProveedor();
+			nuevoProveedor= new InvProveedor();
 			JSFUtil.crearMensajeINFO("Proveedor registrado.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
