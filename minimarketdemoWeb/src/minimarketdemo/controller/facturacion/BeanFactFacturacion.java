@@ -67,6 +67,15 @@ public class BeanFactFacturacion implements Serializable {
 	public void actionListenerEliminarProducto(carritoDTO p) {
 		try {
 			carrito= mFacturacion.eliminarProductoCarrito(carrito, p.getIdStock());
+			int i = 0;
+			for(InvStock stockPro: listaProductosStock) {
+				if(stockPro.getIdInvStock()==p.getIdStock()) {
+					stockPro.setCantidadStockProducto(stockPro.getCantidadStockProducto()+p.getCantidadCompra());
+					listaProductosStock.set(i, stockPro);
+					break;
+				}
+				i++;
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

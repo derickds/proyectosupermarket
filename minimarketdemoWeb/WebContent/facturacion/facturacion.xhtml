@@ -39,7 +39,7 @@
 				<p:commandButton value="Buscar" update="@form"
 					actionListener="#{beanFactFacturacion.actionListenerBuscarStockProducto()}" />
 				<p:dataGrid value="#{beanFactFacturacion.listaProductosStock}"
-					var="p" paginator="true" rows="10">
+					var="p" paginator="true" rows="9">
 					<p:panel header="producto">
 						<h:panelGrid columns="2">
 							<h:outputText value="ID:" />
