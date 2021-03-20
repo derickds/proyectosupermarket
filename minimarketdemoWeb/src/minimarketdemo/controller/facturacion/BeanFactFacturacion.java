@@ -11,6 +11,7 @@ import javax.inject.Named;
 import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.model.core.entities.InvProducto;
 import minimarketdemo.model.core.entities.InvStock;
+import minimarketdemo.model.facturacion.dtos.carritoDTO;
 import minimarketdemo.model.facturacion.managers.ManagerFacturacion;
 
 @Named
@@ -19,7 +20,8 @@ public class BeanFactFacturacion implements Serializable {
 	@EJB
 	private ManagerFacturacion mFacturacion;
 	private List<InvStock> listaProductosStock;
-	private List<InvStock> carrito;
+	private List<carritoDTO> carrito;
+	private int idStock;
 	public BeanFactFacturacion() {
 		// TODO Auto-generated constructor stub
 	}
@@ -34,8 +36,12 @@ public class BeanFactFacturacion implements Serializable {
 		carrito = mFacturacion.agregarProductoCarrito(carrito, p);
 	}
 	
-	public void actionListenerEliminarProducto(InvStock p) {
-		carrito= mFacturacion.eliminarProductoCarrito(carrito, p.getIdInvStock());
+	public void actionListenerEliminarProducto(carritoDTO p) {
+		carrito= mFacturacion.eliminarProductoCarrito(carrito, p.getIdStock());
+	}
+	
+	public void actionListenerBuscarStockProducto() {
+		listaProductosStock = mFacturacion.findProductoStockWhere(idStock);
 	}
 	
 	public String actionCargarFacturar() {
@@ -50,15 +56,21 @@ public class BeanFactFacturacion implements Serializable {
 		this.listaProductosStock = listaProductosStock;
 	}
 
-	public List<InvStock> getCarrito() {
+	public List<carritoDTO> getCarrito() {
 		return carrito;
 	}
 
-	public void setCarrito(List<InvStock> carrito) {
+	public void setCarrito(List<carritoDTO> carrito) {
 		this.carrito = carrito;
 	}
 
+	public int getIdStock() {
+		return idStock;
+	}
 
-	
+	public void setIdStock(int idStock) {
+		this.idStock = idStock;
+	}
+
 
 }

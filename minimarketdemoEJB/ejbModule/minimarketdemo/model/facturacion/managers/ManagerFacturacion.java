@@ -16,6 +16,7 @@ import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.RelacMedio;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.managers.ManagerDAO;
+import minimarketdemo.model.facturacion.dtos.carritoDTO;
 
 /**
  * Session Bean implementation class ManagerFacturacion
@@ -50,22 +51,28 @@ public class ManagerFacturacion {
     	return listaStock;
     }
     
-    public List<InvStock> agregarProductoCarrito(List<InvStock> carrito, InvStock p){
+    public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p){
     	if(carrito==null) {
-    		carrito = new ArrayList<InvStock>();
+    		carrito = new ArrayList<carritoDTO>();
     	}else {
-    		carrito.add(p);
+    		carritoDTO carritodto = new carritoDTO(
+    				p.getIdInvStock(),
+    				1,
+    				p.getInvProducto().getIdInvProducto(),
+    				p.getInvProducto().getNombreProducto(),
+    				 p.getInvProducto().getPrecio().doubleValue());
+    		carrito.add(carritodto);
     	}
     	return carrito;
     }
     
-    public List<InvStock> eliminarProductoCarrito(List<InvStock> carrito, int codigoProducto){
+    public List<carritoDTO> eliminarProductoCarrito(List<carritoDTO> carrito, int codigoProducto){
     	if(carrito==null) {
     		return null;
     	}else {
     		int i = 0;
-    		for(InvStock p:carrito) {
-    			if(p.getIdInvStock()==codigoProducto) {
+    		for(carritoDTO p:carrito) {
+    			if(p.getIdStock()==codigoProducto) {
         			carrito.remove(i);	
         			break;
     			}
@@ -73,6 +80,14 @@ public class ManagerFacturacion {
     		}
     	}
     	return carrito;
+    }
+    
+    public List<InvStock> findProductoStockWhere(int idStock){
+    	if(idStock==0) {
+    		return findAllProductosDisponibles();
+    	}else {
+    	return mDAO.findWhere(InvStock.class, "id_inv_stock="+idStock, null);
+    	}
     }
     
     //Manejo Detalle Factura *********************************************************************************
