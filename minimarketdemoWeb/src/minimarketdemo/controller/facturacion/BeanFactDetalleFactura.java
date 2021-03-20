@@ -29,18 +29,33 @@ public class BeanFactDetalleFactura implements Serializable {
 	
 	@PostConstruct
 	public void inicializacion() {
-		listaDetalles= mFacturacion.findAllDetallesFactura();
+		try {
+			listaDetalles= mFacturacion.findAllDetallesFactura();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String actionCargarMenuDetalle() {
-		listaDetalles = mFacturacion.findAllDetallesFactura();
+		try {
+			listaDetalles = mFacturacion.findAllDetallesFactura();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		listaCabecera =  mFacturacion.findAllCabecerasFactura();
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaDetalles.size());
 		return "detalles";
 	}
 
 	public void actionListenerConsultarDetalles() {
-		listaDetalles = mFacturacion.findDetallesFacturaByIdCabecera(idFactCabecera);
+		try {
+			listaDetalles = mFacturacion.findDetallesFacturaByIdCabecera(idFactCabecera);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaDetalles.size());
 	}
 	

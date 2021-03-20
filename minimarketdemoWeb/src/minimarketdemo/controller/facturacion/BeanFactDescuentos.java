@@ -34,7 +34,12 @@ public class BeanFactDescuentos implements Serializable{
 	}
 	
 	public String actionCargarMenuDescuentos() {
-		listaDescuentos=mFacturacion.findAllDescuentos();
+		try {
+			listaDescuentos=mFacturacion.findAllDescuentos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "descuentos";
 	}
 	

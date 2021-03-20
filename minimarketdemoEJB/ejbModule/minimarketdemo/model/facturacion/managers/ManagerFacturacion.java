@@ -51,13 +51,15 @@ public class ManagerFacturacion {
     	return listaStock;
     }
     
-    public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p){
+    public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p,int cantidad)  throws Exception{
     	if(carrito==null) {
     		carrito = new ArrayList<carritoDTO>();
+    	}else if(p.getCantidadStockProducto()==0){
+    		throw new Exception("Producto sin stock");
     	}else {
     		carritoDTO carritodto = new carritoDTO(
     				p.getIdInvStock(),
-    				1,
+    				cantidad,
     				p.getInvProducto().getIdInvProducto(),
     				p.getInvProducto().getNombreProducto(),
     				 p.getInvProducto().getPrecio().doubleValue());
@@ -66,7 +68,7 @@ public class ManagerFacturacion {
     	return carrito;
     }
     
-    public List<carritoDTO> eliminarProductoCarrito(List<carritoDTO> carrito, int codigoProducto){
+    public List<carritoDTO> eliminarProductoCarrito(List<carritoDTO> carrito, int codigoProducto)  throws Exception{
     	if(carrito==null) {
     		return null;
     	}else {
@@ -82,7 +84,7 @@ public class ManagerFacturacion {
     	return carrito;
     }
     
-    public List<InvStock> findProductoStockWhere(int idStock){
+    public List<InvStock> findProductoStockWhere(int idStock)  throws Exception{
     	if(idStock==0) {
     		return findAllProductosDisponibles();
     	}else {
@@ -91,16 +93,16 @@ public class ManagerFacturacion {
     }
     
     //Manejo Detalle Factura *********************************************************************************
-    public List<FactDetalle> findAllDetallesFactura(){
+    public List<FactDetalle> findAllDetallesFactura()  throws Exception{
     	return mDAO.findAll(FactDetalle.class, null);
     }
     
-    public List<FactDetalle> findDetallesFacturaByIdCabecera(int idCabecera){
+    public List<FactDetalle> findDetallesFacturaByIdCabecera(int idCabecera)  throws Exception{
     	return mDAO.findWhere(FactDetalle.class, "id_fact_cabecera="+idCabecera, null);
     }
     //MANEJO DESCUENTOS *********************************************************************************
     //Listado de todos los descuentos
-    public List<FactDescuento> findAllDescuentos(){
+    public List<FactDescuento> findAllDescuentos()  throws Exception{
     	return mDAO.findAll(FactDescuento.class, null);
     }
     //Agregar un nuevo descuento

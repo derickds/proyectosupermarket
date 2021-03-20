@@ -22,6 +22,8 @@ public class BeanFactFacturacion implements Serializable {
 	private List<InvStock> listaProductosStock;
 	private List<carritoDTO> carrito;
 	private int idStock;
+	private int cantidad;
+	private InvStock compra;
 	public BeanFactFacturacion() {
 		// TODO Auto-generated constructor stub
 	}
@@ -32,16 +34,52 @@ public class BeanFactFacturacion implements Serializable {
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaProductosStock.size());
 	}
 	
-	public void actionListenerAgregarProducto(InvStock p) {
-		carrito = mFacturacion.agregarProductoCarrito(carrito, p);
+	public void actionSeleccionarCompra(InvStock p) {
+		try {
+			compra=p;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void actionListenerAgregarProducto() {
+		try {
+			carrito = mFacturacion.agregarProductoCarrito(carrito, compra, cantidad);
+			System.out.println("Cantidad: "+cantidad);
+			int i = 0;
+			for(InvStock stockPro: listaProductosStock) {
+				if(stockPro.getIdInvStock()==compra.getIdInvStock()) {
+					stockPro.setCantidadStockProducto(stockPro.getCantidadStockProducto()-cantidad);
+					listaProductosStock.set(i, stockPro);
+					break;
+				}
+				i++;
+			}
+			compra= new InvStock();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void actionListenerEliminarProducto(carritoDTO p) {
-		carrito= mFacturacion.eliminarProductoCarrito(carrito, p.getIdStock());
+		try {
+			carrito= mFacturacion.eliminarProductoCarrito(carrito, p.getIdStock());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void actionListenerBuscarStockProducto() {
-		listaProductosStock = mFacturacion.findProductoStockWhere(idStock);
+		try {
+			listaProductosStock = mFacturacion.findProductoStockWhere(idStock);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String actionCargarFacturar() {
@@ -70,6 +108,22 @@ public class BeanFactFacturacion implements Serializable {
 
 	public void setIdStock(int idStock) {
 		this.idStock = idStock;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	public InvStock getCompra() {
+		return compra;
+	}
+
+	public void setCompra(InvStock compra) {
+		this.compra = compra;
 	}
 
 

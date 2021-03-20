@@ -31,9 +31,9 @@
 	</h:form>
 	<p:panel>
 		<h:form>
-		<p:panel>
-		
-		</p:panel>
+			<p:panel>
+
+			</p:panel>
 			<p:panel header="Datos de Productos">
 				<p:inputText value="#{beanFactFacturacion.idStock}" />
 				<p:commandButton value="Buscar" update="@form"
@@ -48,8 +48,11 @@
 							<h:outputText value="#{p.invProducto.nombreProducto}" />
 							<h:outputText value="Precio:" />
 							<h:outputText value="#{p.invProducto.precio}" />
-							<p:commandButton value="Agregar" update="@form"
-								actionListener="#{beanFactFacturacion.actionListenerAgregarProducto(p)}" />
+							<h:outputText value="Cantidad:" />
+							<h:outputText value="#{p.cantidadStockProducto}" />
+							<p:commandButton value="Agregar" 
+								actionListener="#{beanFactFacturacion.actionSeleccionarCompra(p)}" 
+								oncomplete="PF('dialogoCantidad').show()" update=":formCantidad"/>
 						</h:panelGrid>
 					</p:panel>
 				</p:dataGrid>
@@ -75,5 +78,18 @@
 			</p:panel>
 		</h:form>
 	</p:panel>
+	
+	
+	<p:dialog header="Cantidad" widgetVar="dialogoCantidad">
+		<h:form id="formCantidad">
+			<p:panelGrid columns="2" layout="grid">
+				<h:outputText value="Cantidad de productos" />
+				<p:spinner value="#{beanFactFacturacion.cantidad}" min="0" stepFactor="1" max="#{beanFactFacturacion.compra.cantidadStockProducto}">
+				</p:spinner>
+				<p:commandButton value="Asignar" icon="pi pi-save" update="@form"
+				actionListener="#{beanFactFacturacion.actionListenerAgregarProducto()}"></p:commandButton>
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
 </body>
 </html>
