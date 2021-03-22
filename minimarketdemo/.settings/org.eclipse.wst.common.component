@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="minimarketdemo">
+            
+    
+    <wb-module deploy-name="supermercadomirey">
+                        
+        
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <dependent-module archiveName="minimarketdemoEJB.jar" deploy-path="/" handle="module:/resource/minimarketdemoEJB/minimarketdemoEJB">
+                
+        <dependent-module archiveName="supermercadomireyEJB.jar" deploy-path="/" handle="module:/resource/supermercadomireyEJB/supermercadomireyEJB">
+                        
             <dependent-object/>
+                        
             <dependency-type>uses</dependency-type>
+                    
         </dependent-module>
-        <dependent-module archiveName="minimarketdemoWeb.war" deploy-path="/" handle="module:/resource/minimarketdemoWeb/minimarketdemoWeb">
+                
+        <dependent-module archiveName="supermercadomireyWeb.war" deploy-path="/" handle="module:/resource/supermercadomireyWeb/supermercadomireyWeb">
+                        
             <dependent-object/>
+                        
             <dependency-type>uses</dependency-type>
+                    
         </dependent-module>
+                    
+    
     </wb-module>
+        
+
 </project-modules>

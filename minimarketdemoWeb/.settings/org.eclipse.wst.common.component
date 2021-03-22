@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="minimarketdemoWeb">
+        
+    <wb-module deploy-name="supermercadomireyWeb">
+                
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="minimarketdemoWeb"/>
-        <property name="java-output-path" value="/minimarketdemoWeb/build/classes"/>
+                
+        <property name="java-output-path" value="/supermercadomireyWeb/build/classes"/>
+        <property name="context-root" value="supermercadomireyWeb"/>
+            
     </wb-module>
+    
 </project-modules>
