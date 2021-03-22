@@ -29,11 +29,30 @@
 			</f:facet>
 		</p:menubar>
 	</h:form>
+	
 	<p:panel>
 		<h:form id="formDatos">
-			<p:panel>
-
+		<p:panel header = "Datos del Cliente">
+				<p:inputText value="#{beanCliPersona.cedulaClienteFact}"/>
+				<p:commandButton value="Buscar" actionListener="#{beanCliPersona.actionFindByIdCliente()}" update="@form"/>
+				<p:dataGrid value="#{beanCliPersona.clienteFact}" paginator="false" rows="9">
+					<p:panelGrid columns="6">
+						<h:outputText value="Cedula:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.cedulaCliPersona}" requiredMessage="Ingrese el número de cédula del cliente"/>
+						<h:outputText value="Nombres:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.nombresPersona}" requiredMessage="Ingrese los nombres del cliente"/>
+						<h:outputText value="Apellidos:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.apellidosPersona}" requiredMessage="Ingrese los apellidos del cliente"/>
+						<h:outputText value="Correo:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.emailPersona}" requiredMessage="Ingrese el correo del cliente"/>
+						<h:outputText value="Direccion:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.direccionPersona}" requiredMessage="Ingrese la dirección del cliente" />
+						<h:outputText value="Telefono:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.telefonoPersona}" requiredMessage="Ingrese el teléfono del cliente"/>
+					</p:panelGrid>
+					</p:dataGrid>
 			</p:panel>
+			
 			<p:panel header="Datos de Productos">
 				<p:inputText value="#{beanFactFacturacion.idStock}" />
 				<p:commandButton value="Buscar" update="@form"
@@ -75,6 +94,7 @@
 							actionListener="#{beanFactFacturacion.actionListenerEliminarProducto(p)}" />
 					</p:column>
 				</p:dataTable>
+				<p:commandButton actionListener="#{beanFactFacturacion.crearCliente()}" value="Facturar"></p:commandButton>
 			</p:panel>
 		</h:form>
 	</p:panel>

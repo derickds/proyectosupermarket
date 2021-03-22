@@ -30,7 +30,20 @@ public class ManagerCliente {
 	}
 	
 	public CliPersona findByIdPersona(String cedulaCliPersona) throws Exception {
-		return (CliPersona) mDAO.findById(CliPersona.class, cedulaCliPersona);
+		CliPersona cliente = (CliPersona) mDAO.findById(CliPersona.class, cedulaCliPersona);
+		if(cliente==null) {
+			cliente = new CliPersona();
+		}
+		return cliente;
+	}
+	
+	public boolean verificarClienteFactura(CliPersona clienteFact) {
+		for(CliPersona c : findAllPersonas()) {
+			if(c.getCedulaCliPersona().equals(clienteFact.getCedulaCliPersona())) {
+				return true;
+			}
+		}
+		return false;	
 	}
 	
 	public void insertarPersona(CliPersona nuevoCliente) throws Exception{

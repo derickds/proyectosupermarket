@@ -22,6 +22,9 @@ public class BeanCliPersona implements Serializable {
 	private List<CliPersona> listaPersonas;
 	private CliPersona nuevaPersona;
 	private CliPersona edicionPersona;
+	private String cedulaClienteFact;
+	private CliPersona clienteFact;
+	
 	
 	public BeanCliPersona() {
 		// TODO Auto-generated constructor stub
@@ -30,6 +33,7 @@ public class BeanCliPersona implements Serializable {
 	@PostConstruct
 	public void inicializacion() {
 		System.out.println("BeanCliPersona inicializado...");
+		listaPersonas = mCliente.findAllPersonas();
 		nuevaPersona = new CliPersona();
 	}
 	
@@ -71,6 +75,17 @@ public class BeanCliPersona implements Serializable {
 		}
 	}
 	
+	public void actionFindByIdCliente() {
+		try {
+			clienteFact = new CliPersona();
+			clienteFact =  mCliente.findByIdPersona(cedulaClienteFact);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+		
+	
 	public void actionListenerEliminarPersona(String cedulaCliPersona) {
 		try {
 			mCliente.eliminarPersona(cedulaCliPersona);
@@ -81,6 +96,21 @@ public class BeanCliPersona implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void actionListenerRegistrarClienteFactura() {
+		try {
+			if(mCliente.verificarClienteFactura(clienteFact)==false) {
+				mCliente.insertarPersona(clienteFact);
+				listaPersonas = mCliente.findAllPersonas();
+				JSFUtil.crearMensajeINFO("Cliente registrado");
+				clienteFact = new CliPersona();
+			}
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 
 	public List<CliPersona> getListaPersonas() {
 		return listaPersonas;
@@ -104,6 +134,22 @@ public class BeanCliPersona implements Serializable {
 
 	public void setEdicionPersona(CliPersona edicionPersona) {
 		this.edicionPersona = edicionPersona;
+	}
+
+	public String getCedulaClienteFact() {
+		return cedulaClienteFact;
+	}
+
+	public void setCedulaClienteFact(String cedulaClienteFact) {
+		this.cedulaClienteFact = cedulaClienteFact;
+	}
+
+	public CliPersona getClienteFact() {
+		return clienteFact;
+	}
+
+	public void setClienteFact(CliPersona clienteFact) {
+		this.clienteFact = clienteFact;
 	}
 	
 	

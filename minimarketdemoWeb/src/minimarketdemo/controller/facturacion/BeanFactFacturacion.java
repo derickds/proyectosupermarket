@@ -6,9 +6,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
+import minimarketdemo.controller.cliente.BeanCliPersona;
+import minimarketdemo.model.core.entities.CliPersona;
 import minimarketdemo.model.core.entities.InvProducto;
 import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.facturacion.dtos.carritoDTO;
@@ -24,14 +27,23 @@ public class BeanFactFacturacion implements Serializable {
 	private int idStock;
 	private int cantidad;
 	private InvStock compra;
+	private CliPersona clienteFact;
 	public BeanFactFacturacion() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Inject
+	private BeanCliPersona beanCliPersona;
 	
 	@PostConstruct
 	public void inicializar() {
 		listaProductosStock = mFacturacion.findAllProductosDisponibles();
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaProductosStock.size());
+	}
+	
+	public void crearCliente() {
+		beanCliPersona.actionListenerRegistrarClienteFactura();
+		clienteFact = beanCliPersona.getClienteFact();
 	}
 	
 	public void actionSeleccionarCompra(InvStock p) {
@@ -43,6 +55,8 @@ public class BeanFactFacturacion implements Serializable {
 		}
 		
 	}
+	
+	
 	
 	public void actionListenerAgregarProducto() {
 		try {
@@ -133,6 +147,14 @@ public class BeanFactFacturacion implements Serializable {
 
 	public void setCompra(InvStock compra) {
 		this.compra = compra;
+	}
+
+	public CliPersona getClienteFact() {
+		return clienteFact;
+	}
+
+	public void setClienteFact(CliPersona clienteFact) {
+		this.clienteFact = clienteFact;
 	}
 
 
