@@ -80,6 +80,11 @@ public class BeanRelacMedio implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public int actionListenerContarMedios() {
+			return mRelacionCliente.contarMedios();
+		}
+	
 	public List<RelacMedio> getListaMedios() {
 		return listaMedios;
 	}

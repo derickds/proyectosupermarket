@@ -87,4 +87,22 @@ public class ManagerRelacionCliente {
     	relacion.setDescripcionCliente(edicionRelacion.getDescripcionCliente());
     	mDAO.actualizar(relacion);
     }
+    
+    public int contarMedios() {
+		int numeroMedios=0;
+		List<RelacMedio> medio=mDAO.findAll(RelacMedio.class);
+		for(RelacMedio med:medio) {
+			numeroMedios=numeroMedios+1;
+		}
+		return numeroMedios;
+	}
+
+    public int contarRelacion() {
+		int numeroRelacion=0;
+		List<RelacCliente> relacion=mDAO.findAll(RelacCliente.class);
+		for(RelacCliente relac:relacion) {
+			numeroRelacion=numeroRelacion+1;
+		}
+		return numeroRelacion;
+	}
 }

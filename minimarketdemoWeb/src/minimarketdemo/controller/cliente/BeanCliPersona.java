@@ -24,6 +24,7 @@ public class BeanCliPersona implements Serializable {
 	private CliPersona edicionPersona;
 	private String cedulaClienteFact;
 	private CliPersona clienteFact;
+	private CliPersona ultimoCliente;
 	
 	
 	public BeanCliPersona() {
@@ -35,6 +36,7 @@ public class BeanCliPersona implements Serializable {
 		System.out.println("BeanCliPersona inicializado...");
 		listaPersonas = mCliente.findAllPersonas();
 		nuevaPersona = new CliPersona();
+		ultimoCliente=mCliente.clienteMasReciente();
 	}
 	
 	public String actionCargarMenuCliPersona() {
@@ -111,6 +113,10 @@ public class BeanCliPersona implements Serializable {
 		}
 	}
 	
+	public int actionListenerContarClientes() {
+		return mCliente.contarClientes();
+	}
+	
 
 	public List<CliPersona> getListaPersonas() {
 		return listaPersonas;
@@ -150,6 +156,14 @@ public class BeanCliPersona implements Serializable {
 
 	public void setClienteFact(CliPersona clienteFact) {
 		this.clienteFact = clienteFact;
+	}
+
+	public CliPersona getUltimoCliente() {
+		return ultimoCliente;
+	}
+
+	public void setUltimoCliente(CliPersona ultimoCliente) {
+		this.ultimoCliente = ultimoCliente;
 	}
 	
 	

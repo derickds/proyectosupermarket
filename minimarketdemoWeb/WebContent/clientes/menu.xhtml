@@ -17,11 +17,11 @@
 			<p:menuitem value="Regresar" icon="pi pi-home"
 				action="/menu?faces-redirect=true" />
 			<p:menuitem value="Clientes" icon="pi pi-user"
-			action="#{beanCliPersona.actionCargarMenuCliPersona()}"/>
+				action="#{beanCliPersona.actionCargarMenuCliPersona()}" />
 			<p:menuitem value="Relacion Clientes" icon="pi pi-heart"
-			action="#{beanRelacCliente.actionCargarMenuRelacion()}"/>
+				action="#{beanRelacCliente.actionCargarMenuRelacion()}" />
 			<p:menuitem value="Medio de Relacion" icon="pi pi-phone"
-			action="#{beanRelacMedio.actionCargarMenuMedios()}"/>
+				action="#{beanRelacMedio.actionCargarMenuMedios()}" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -31,9 +31,83 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de Manejo de Clientes"></p:staticMessage>
+
 	</h:form>
-	<div>
+	<div align="center">
+		<h:form>
+			<p:panel style="width:80%">
+				<p:staticMessage severity="info" summary="INFORMACION GENERAL"
+					style="width: 100%" />
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./usuarios.png" />
+							</f:facet>
+							<f:facet name="title"> Clientes </f:facet>
+							<f:facet name="subtitle">Numero de clientes</f:facet>
+							<h:outputText
+								value="#{beanCliPersona.actionListenerContarClientes()}" />
+						</p:card>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./relacion.png" />
+							</f:facet>
+							<f:facet name="title"> Relacion con Clientes </f:facet>
+							<f:facet name="subtitle">Numero de Comunicaciones</f:facet>
+							<h:outputText
+								value="#{beanRelacCliente.actionListenerContarRelacion()}" />
+						</p:card>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./medios.png" />
+							</f:facet>
+							<f:facet name="title"> Medios de relacion </f:facet>
+							<f:facet name="subtitle">Numero de medios</f:facet>
+							<h:outputText
+								value="#{beanRelacMedio.actionListenerContarMedios()}" />
+						</p:card>
+					</div>
+					<div class="ui-g-12">
+						<div class="ui-g-12 ui-md-12">
+							<p:card style="width: 100%">
+								<f:facet name="header">
+								</f:facet>
+								<f:facet name="title"> Cliente mas reciente </f:facet>
+								<h:panelGrid columns="2">
+									<h:panelGrid columns="2">
+										<h:outputText value="CEDULA: " />
+										<h:outputText
+											value="#{beanCliPersona.ultimoCliente.cedulaCliPersona}" />
+										<h:outputText value="APELLIDOS: " />
+										<h:outputText
+											value="#{beanCliPersona.ultimoCliente.apellidosPersona}" />
+										<h:outputText value="NOMBRES: " />
+										<h:outputText
+											value="#{beanCliPersona.ultimoCliente.nombresPersona}" />
+										<h:outputText value="EMAIL: " />
+										<h:outputText
+											value="#{beanCliPersona.ultimoCliente.emailPersona}" />
+										<h:outputText value="TELEFONO " />
+										<h:outputText
+											value="#{beanCliPersona.ultimoCliente.telefonoPersona}" />
+										<h:outputText value="DRECCION: " />
+										<h:outputText
+											value="#{beanCliPersona.ultimoCliente.direccionPersona}" />
+									</h:panelGrid>
+									<img alt="user header" src="./ulltimo.png" width="150px" height="150px" />
+								</h:panelGrid>
+							</p:card>
+						</div>
+					</div>
+				</div>
+
+			</p:panel>
+		</h:form>
 	</div>
 </body>
 </html>

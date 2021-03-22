@@ -69,5 +69,22 @@ public class ManagerCliente {
 		mDAO.actualizar(cliente);
 	}
 	
+	public int contarClientes() {
+		int numeroClientes=0;
+		List<CliPersona> cliente=mDAO.findAll(CliPersona.class);
+		for(CliPersona cli:cliente) {
+			numeroClientes=numeroClientes+1;
+		}
+		return numeroClientes;
+	}
+
+	public CliPersona clienteMasReciente() {
+		CliPersona c=new CliPersona();
+		List<CliPersona> cliente=mDAO.findAll(CliPersona.class);
+		for(CliPersona cli:cliente) {
+			c=cli;
+		}
+		return c;
+	}
 
 }

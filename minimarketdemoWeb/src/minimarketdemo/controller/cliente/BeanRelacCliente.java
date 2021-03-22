@@ -94,6 +94,10 @@ public class BeanRelacCliente implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public int actionListenerContarRelacion() {
+		return mRelacionCliente.contarRelacion();
+	}
 
 	public List<RelacCliente> getListaRelacion() {
 		return listaRelacion;
