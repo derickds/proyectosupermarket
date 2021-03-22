@@ -9,6 +9,8 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import minimarketdemo.model.core.entities.InvProducto;
+import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.ThmCargo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.entities.ThmRolCabecera;
@@ -59,6 +61,25 @@ public class ManagerTHumano {
     
     public List<ThmCargo> findAllThmCargo(){
     	return mDAO.findAll(ThmCargo.class, "nombreCargo");
+    }
+    public void insertarThmCargo(ThmCargo nuevoCargo) throws Exception {
+    	ThmCargo nuevo=new ThmCargo();
+    	nuevo.setNombreCargo(nuevoCargo.getNombreCargo());
+    	nuevo.setRemuneracionMensual(nuevoCargo.getRemuneracionMensual());
+    	mDAO.insertar(nuevo);
+    }
+    public void editarThmCargo(ThmCargo editarCargo) throws Exception {
+    	ThmCargo nuevo=findByIdThmCargo(editarCargo.getIdThmCargo());
+    	nuevo.setNombreCargo(editarCargo.getNombreCargo());
+    	nuevo.setRemuneracionMensual(editarCargo.getRemuneracionMensual());
+    	mDAO.actualizar(nuevo);
+    }
+    public void eliminarCargo(int cargoId) throws Exception {
+    	ThmCargo cargo=findByIdThmCargo(cargoId);
+    	List<ThmEmpleado> empleado=mDAO.findWhere(ThmEmpleado.class,"id_thm_cargo="+cargoId, null);
+    	if(empleado.size()>0)
+    		throw new Exception("No se puede elimininar el cargo, aun esta asignado");
+    	mDAO.eliminar(ThmCargo.class,cargo.getIdThmCargo());
     }
     
     //ROL DE PAGOS:
