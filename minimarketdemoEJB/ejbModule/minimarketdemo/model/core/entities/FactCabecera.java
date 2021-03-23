@@ -3,7 +3,7 @@ package minimarketdemo.model.core.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -25,9 +25,8 @@ public class FactCabecera implements Serializable {
 	@Column(name="direccion_local_cabecera", nullable=false, length=100)
 	private String direccionLocalCabecera;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_cabecera", nullable=false)
-	private Date fechaCabecera;
+	private Timestamp fechaCabecera;
 
 	@Column(name="id_fact", nullable=false, length=10)
 	private String idFact;
@@ -79,11 +78,11 @@ public class FactCabecera implements Serializable {
 		this.direccionLocalCabecera = direccionLocalCabecera;
 	}
 
-	public Date getFechaCabecera() {
+	public Timestamp getFechaCabecera() {
 		return this.fechaCabecera;
 	}
 
-	public void setFechaCabecera(Date fechaCabecera) {
+	public void setFechaCabecera(Timestamp fechaCabecera) {
 		this.fechaCabecera = fechaCabecera;
 	}
 

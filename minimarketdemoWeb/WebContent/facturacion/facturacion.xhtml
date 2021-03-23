@@ -50,7 +50,7 @@
 						<h:outputText value="Telefono:" />
 						<h:inputText value="#{beanCliPersona.clienteFact.telefonoPersona}" requiredMessage="Ingrese el teléfono del cliente"/>
 					</p:panelGrid>
-					</p:dataGrid>
+				</p:dataGrid>
 			</p:panel>
 			
 			<p:panel header="Datos de Productos">
@@ -70,32 +70,53 @@
 							<h:outputText value="Cantidad:" />
 							<h:outputText value="#{p.cantidadStockProducto}" />
 							<p:commandButton value="Agregar" 
-								actionListener="#{beanFactFacturacion.actionSeleccionarCompra(p)}" 
+								actionListener="#{beanFactFacturacion.actionSeleccionarCompra(p.idInvStock)}" 
 								oncomplete="PF('dialogoCantidad').show()" update=":formCantidad"/>
 						</h:panelGrid>
 					</p:panel>
 				</p:dataGrid>
-				<p:dataTable value="#{beanFactFacturacion.carrito}" var="p"
+				<p:dataTable value="#{beanFactFacturacion.carrito}" var="p2"
 					paginator="true" rows="10">
 					<p:column headerText="ID">
-						<h:outputText value="#{p.idStock}" />
+						<h:outputText value="#{p2.idStock}" />
 					</p:column>
 					<p:column headerText="NOMBRE">
-						<h:outputText value="#{p.nombreProducto}" />
+						<h:outputText value="#{p2.nombreProducto}" />
 					</p:column>
 					<p:column headerText="PRECIO">
-						<h:outputText value="#{p.precio}" />
+						<h:outputText value="#{p2.precio}" />
 					</p:column>
 					<p:column headerText="CANTIDAD">
-						<h:outputText value="#{p.cantidadCompra}" />
+						<h:outputText value="#{p2.cantidadCompra}" />
 					</p:column>
 					<p:column>
 						<p:commandButton value="Eliminar" update="@form"
-							actionListener="#{beanFactFacturacion.actionListenerEliminarProducto(p)}" />
+							actionListener="#{beanFactFacturacion.actionListenerEliminarProducto(p2)}" />
 					</p:column>
 				</p:dataTable>
-				<p:commandButton actionListener="#{beanFactFacturacion.crearCliente()}" value="Facturar"></p:commandButton>
 			</p:panel>
+			<p:panel header = "Datos de la Factura">
+			<h:outputText value="Subtotal:" />
+				<h:outputText value="#{beanFactFacturacion.subTotal}" />
+				<br/>
+				<h:outputText value="IVA:" />
+				<h:outputText value="0.12" />
+				<br/>
+				<h:outputText value="Valor IVA:" />
+				<h:outputText value="#{beanFactFacturacion.iva}" />
+				<br/>
+				<h:outputText value="Descuento:" />
+				<p:selectOneMenu value="#{beanFactFacturacion.descuentoFact}">
+					<f:selectItems value="#{beanFactFacturacion.listaDescuentos}" var="ds"
+					itemLabel="#{ds.nombreDescuento}" itemValue="#{ds.idFactDescuento}">
+					</f:selectItems>
+				</p:selectOneMenu>
+				<br/>
+				<h:outputText value="Total:" />
+				<h:outputText value="#{beanFactFacturacion.total}" />
+				<br/>
+				<p:commandButton actionListener="#{beanFactFacturacion.actionListenerGenerarFactura()}" value="Facturar"></p:commandButton>
+		</p:panel>
 		</h:form>
 	</p:panel>
 	

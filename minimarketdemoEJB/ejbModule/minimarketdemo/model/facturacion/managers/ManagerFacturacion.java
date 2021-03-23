@@ -1,6 +1,10 @@
 package minimarketdemo.model.facturacion.managers;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,6 +12,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.CliPersona;
 import minimarketdemo.model.core.entities.FactCabecera;
 import minimarketdemo.model.core.entities.FactDescuento;
 import minimarketdemo.model.core.entities.FactDetalle;
@@ -15,6 +20,7 @@ import minimarketdemo.model.core.entities.InvProducto;
 import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.RelacMedio;
 import minimarketdemo.model.core.entities.SegModulo;
+import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.facturacion.dtos.carritoDTO;
 
@@ -99,6 +105,79 @@ public class ManagerFacturacion {
     	}
     }
     
+    public double calcularSubtotal(List<carritoDTO> carrito) {
+    	double var = 0;
+    	for(carritoDTO car: carrito) {
+    		var = var +(car.getCantidadCompra()*car.getPrecio());
+    	}
+    	return var;
+    }
+    
+    public double calcularIva(double subtotal, double iva) {
+    	return subtotal * iva;
+    }
+    
+    public double calcularTotal(double iva, int descuento, double subtotal) {
+    	double descuentos =(subtotal * (descuento * 0.01));
+    	double total = subtotal -descuentos + iva;
+    	return total;
+    }
+    
+    
+    public void generarFactura(CliPersona persona, FactDescuento descuento, SegUsuario usuario, List<carritoDTO> carrito) {
+    	FactCabecera factura = new FactCabecera();
+    	factura.setIdFact("");
+    	factura.setCliPersona(persona);
+    	factura.setFactDescuento(descuento);
+    	factura.setSegUsuario(usuario);
+    	factura.setDireccionLocalCabecera("Teodoro Gómez");
+    	Timestamp tiempo=new Timestamp(System.currentTimeMillis());
+    	factura.setFechaCabecera(tiempo);
+    	
+    	BigDecimal subtotal = new BigDecimal(calcularSubtotal(carrito), MathContext.DECIMAL64);
+    	factura.setSubtotalCabecera(subtotal);
+    	BigDecimal ivaa = new BigDecimal(calcularIva(subtotal.doubleValue(), 0.12), MathContext.DECIMAL64);
+    	factura.setIvaCabecera(ivaa);
+    	BigDecimal total = new BigDecimal(calcularTotal(ivaa.doubleValue(), descuento.getPorcentajeDescuento(), subtotal.doubleValue()), MathContext.DECIMAL64);
+    	factura.setTotalCabecera(total);
+    	
+    	try {
+			mDAO.insertar(factura);
+			List<FactCabecera> cabeceras = findAllCabecerasFactura();
+			
+	    	for(int i = 0; i < carrito.size(); i++) {
+	    		FactDetalle detalles = new FactDetalle();
+	    		detalles.setCantidadDetalle(carrito.get(i).getCantidadCompra());
+	    		BigDecimal costo = new BigDecimal(carrito.get(i).getPrecio(), MathContext.DECIMAL64);
+	    		detalles.setCostoUnitarioDetalle(costo);
+	    		detalles.setFactCabecera(cabeceras.get(cabeceras.size()-1));
+	    		detalles.setInvProducto(findProductoById(carrito.get(i).getIdProducto()));
+	    		BigDecimal sub = new BigDecimal(carrito.get(i).getCantidadCompra()*carrito.get(i).getPrecio(), MathContext.DECIMAL64);
+	    		detalles.setSubTotalDetalle(sub);
+	    		mDAO.insertar(detalles);
+	    		InvStock inventario = (InvStock) mDAO.findById(InvStock.class,carrito.get(i).getIdProducto());
+	    		inventario.setCantidadStockProducto(inventario.getCantidadStockProducto()-carrito.get(i).getCantidadCompra());
+	    		mDAO.actualizar(inventario);
+	    		System.out.println("1");
+	    	}
+	    	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public SegUsuario findUsuarioById(int idUsuario)throws Exception {
+    	return (SegUsuario) mDAO.findById(SegUsuario.class, idUsuario);
+    }
+    
+    public InvProducto findProductoById(int idProducto) throws Exception {
+    	return (InvProducto) mDAO.findById(InvProducto.class, idProducto);
+    }
+    
+    public InvStock findStockById(int idProducto) throws Exception {
+    	return (InvStock) mDAO.findById(InvStock.class, idProducto);
+    }
     //Manejo Detalle Factura *********************************************************************************
     public List<FactDetalle> findAllDetallesFactura()  throws Exception{
     	return mDAO.findAll(FactDetalle.class, null);
@@ -135,5 +214,9 @@ public class ManagerFacturacion {
     	mDAO.eliminar(FactDescuento.class, descuento.getIdFactDescuento());
     }
     
+    //Buscar por id
+    public FactDescuento findByIdDescuento(int idDescuento)  throws Exception{
+    	return (FactDescuento) mDAO.findById(FactDescuento.class, idDescuento);
+    }
 
 }
