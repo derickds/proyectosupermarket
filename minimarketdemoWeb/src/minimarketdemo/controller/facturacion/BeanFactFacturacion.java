@@ -1,6 +1,7 @@
 package minimarketdemo.controller.facturacion;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -158,12 +159,18 @@ public class BeanFactFacturacion implements Serializable {
 			mFacturacion.generarFactura(clienteFact, descuento, user, carrito);
 			
 			JSFUtil.crearMensajeINFO("¡FACTURA REALIZADA!");
-			return "menu";
+			listaProductosStock = mFacturacion.findAllProductosDisponibles();
+			clienteFact = new CliPersona();
+			subTotal = 0;
+			total = 0;
+			iva = 0;
+			carrito = new ArrayList<carritoDTO>();
+			return "menu?faces-redirect=true";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "menu";
+		return "menu?faces-redirect=true";
 	}
 	
 	public void actionListenerBuscarStockProducto() {

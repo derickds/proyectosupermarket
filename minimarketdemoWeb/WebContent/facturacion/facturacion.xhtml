@@ -115,7 +115,7 @@
 				<h:outputText value="Total:" />
 				<h:outputText value="#{beanFactFacturacion.total}" />
 				<br/>
-				<p:commandButton actionListener="#{beanFactFacturacion.actionListenerGenerarFactura()}" value="Facturar"></p:commandButton>
+				<p:commandButton actionListener="#{beanFactFacturacion.actionListenerGenerarFactura()}" value="Facturar" update="@form"></p:commandButton>
 		</p:panel>
 		</h:form>
 	</p:panel>
