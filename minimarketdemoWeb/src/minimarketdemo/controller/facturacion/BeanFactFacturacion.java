@@ -41,7 +41,6 @@ public class BeanFactFacturacion implements Serializable {
 	private double iva;
 	private double total;
 	private LoginDTO loginDTO;
-	private ManagerCliente mCliente;
 	
 	public BeanFactFacturacion() {
 		// TODO Auto-generated constructor stub
@@ -144,21 +143,22 @@ public class BeanFactFacturacion implements Serializable {
 		}
 	}
 	
+	public void actionRegistrarClienteFactura() {
+		beanCliPersona.actionListenerRegistrarClienteFactura();
+		clienteFact = beanCliPersona.getClienteFact();
+	}
+	
 	public String actionListenerGenerarFactura() {
 		FactDescuento descuento;
 		SegUsuario user;
+		actionRegistrarClienteFactura();
+		beanCliPersona.setClienteFact(new CliPersona());
 		try {
-			beanCliPersona.actionListenerRegistrarClienteFactura();
-			clienteFact = beanCliPersona.getClienteFact();
-			if(clienteFact==null) {
-				List<CliPersona> clientes = mCliente.findAllPersonas();
-				clienteFact = clientes.get(clientes.size()-1);		
-			}
 			descuento = mFacturacion.findByIdDescuento(descuentoFact);
 			user = mFacturacion.findUsuarioById(loginDTO.getIdSegUsuario());
 			mFacturacion.generarFactura(clienteFact, descuento, user, carrito);
 			
-			JSFUtil.crearMensajeINFO("¡FACTURA REALIZADA!");
+			JSFUtil.crearMensajeINFO("ï¿½FACTURA REALIZADA!");
 			listaProductosStock = mFacturacion.findAllProductosDisponibles();
 			clienteFact = new CliPersona();
 			subTotal = 0;

@@ -105,7 +105,6 @@ public class BeanCliPersona implements Serializable {
 				mCliente.insertarPersona(clienteFact);
 				listaPersonas = mCliente.findAllPersonas();
 				JSFUtil.crearMensajeINFO("Cliente registrado");
-				clienteFact = new CliPersona();
 			}
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
