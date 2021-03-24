@@ -80,6 +80,10 @@ public class BeanTHumanoCargos implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo
+	public int actionListenerContarCargos() {
+		return mTHumano.ContarCargos();
+	}
 	public List<String> getListaPeriodosRol() {
 		return listaPeriodosRol;
 	}

@@ -49,6 +49,10 @@ public class BeanAudBitacora implements Serializable {
 		listaBitacora = managerAuditoria.findBitacoraByFecha(fechaInicio, fechaFin);
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaBitacora.size());
 	}
+	//conteo auditoria
+		public int actionListenerContarAuditoria() {
+			return managerAuditoria.ContarAuditorias();
+		}
 
 	public List<AudBitacora> getListaBitacora() {
 		return listaBitacora;

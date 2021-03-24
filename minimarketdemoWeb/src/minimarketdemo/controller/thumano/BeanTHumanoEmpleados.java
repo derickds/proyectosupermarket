@@ -55,6 +55,10 @@ public class BeanTHumanoEmpleados implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo empleado
+	public int actionListenerContarEmpleados() {
+		return mTHumano.ContarEmpleados();
+	}
 
 	public List<SegUsuario> getListaUsuarios() {
 		return listaUsuarios;

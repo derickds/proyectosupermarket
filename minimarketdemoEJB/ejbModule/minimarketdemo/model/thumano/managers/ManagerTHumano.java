@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import minimarketdemo.model.core.entities.CliPersona;
 import minimarketdemo.model.core.entities.InvProducto;
 import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.ThmCargo;
@@ -176,6 +177,22 @@ public class ManagerTHumano {
 		
 		cab.setThmRolDetalles(detalles);
     }
-    
-
+    ///conteo
+    public int ContarCargos() {
+    	int numeroCargos=0;
+    	List<ThmCargo> cargo=mDAO.findAll(ThmCargo.class);
+    	for(ThmCargo cli:cargo) {
+			numeroCargos=numeroCargos+1;
+		}
+		return numeroCargos;
+    }
+    //conteo empleados
+    public int ContarEmpleados() {
+    	int numeroEmpleados=0;
+    	List<ThmEmpleado> empl=mDAO.findAll(ThmEmpleado.class);
+    	for(ThmEmpleado em:empl) {
+    		numeroEmpleados=numeroEmpleados+1;
+		}
+		return numeroEmpleados;
+    }
 }

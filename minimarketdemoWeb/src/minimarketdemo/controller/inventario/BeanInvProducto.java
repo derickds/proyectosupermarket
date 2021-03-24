@@ -149,6 +149,10 @@ public class BeanInvProducto implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo producto
+		public int actionListenerContarProducto() {
+			return managerInventario.ContarProductos();
+		}
 
 	public ManagerInventario getManagerInventario() {
 		return managerInventario;

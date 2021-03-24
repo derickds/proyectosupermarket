@@ -14,6 +14,8 @@ import minimarketdemo.model.core.entities.InvStock;
 import minimarketdemo.model.core.entities.SegAsignacion;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.SegUsuario;
+import minimarketdemo.model.core.entities.ThmCargo;
+import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.core.utils.ModelUtil;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
@@ -140,7 +142,24 @@ public class ManagerInventario {
      * @throws Exception
      */
     
-    
+  ///conteo
+    public int ContarProductos() {
+    	int numeroProductos=0;
+    	List<InvProducto> prod=mDAO.findAll(InvProducto.class);
+    	for(InvProducto p:prod) {
+    		numeroProductos=numeroProductos+1;
+		}
+		return numeroProductos;
+    }
+    //conteo proveedor
+    public int ContarProveedores() {
+    	int numeroProveedor=0;
+    	List<InvProveedor> prove=mDAO.findAll(InvProveedor.class);
+    	for(InvProveedor pro:prove) {
+    		numeroProveedor=numeroProveedor+1;
+		}
+		return numeroProveedor;
+    }
     
 
 }

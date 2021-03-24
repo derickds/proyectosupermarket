@@ -26,8 +26,40 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de inventario"></p:staticMessage>
 	</h:form>
-	<div></div>
+	<div align="center">
+		<h:form>
+			<p:panel style="width:80%">
+				<p:staticMessage severity="info" summary="INFORMACION GENERAL"
+					style="width: 100%" />
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./prodcto.jpg" />
+							</f:facet>
+							<f:facet name="title"> Productos </f:facet>
+							<f:facet name="subtitle">Numero de Productos</f:facet>
+							<h:outputText
+								value="#{beanInvProducto.actionListenerContarProducto()}" />
+						</p:card>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./proveed.jpg" />
+							</f:facet>
+							<f:facet name="title"> Proveedores </f:facet>
+							<f:facet name="subtitle">Numero de Proveedores</f:facet>
+							<h:outputText
+								value="#{beanInvProveedor.actionListenerContarProveedor()}" />
+						</p:card>
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</div>
+	
+	
 </body>
 </html>

@@ -136,6 +136,10 @@ public class BeanInvProveedor implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo modulos
+		public int actionListenerContarProveedor() {
+			return managerInventario.ContarProveedores();
+		}
 
 	public ManagerInventario getManagerInventario() {
 		return managerInventario;

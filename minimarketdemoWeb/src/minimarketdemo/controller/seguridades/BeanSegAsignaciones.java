@@ -62,6 +62,10 @@ public class BeanSegAsignaciones implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo asignacion
+		public int actionListenerContarAsigacion() {
+			return managerSeguridades.ContarAsignacion();
+		}
 
 	public List<SegUsuario> getListaUsuarios() {
 		return listaUsuarios;

@@ -10,6 +10,7 @@ import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.SegAsignacion;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.SegUsuario;
+import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.core.utils.ModelUtil;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
@@ -228,6 +229,33 @@ public class ManagerSeguridades {
     
     public void eliminarAsignacion(int idSegAsignacion) throws Exception {
     	mDAO.eliminar(SegAsignacion.class, idSegAsignacion);
+    }
+    //conteo modulos
+    public int ContarModulos() {
+    	int numeroModulos=0;
+    	List<SegModulo> mo=mDAO.findAll(SegModulo.class);
+    	for(SegModulo m:mo) {
+    		numeroModulos=numeroModulos+1;
+		}
+		return numeroModulos;
+    }
+  //conteo asignacion
+    public int ContarAsignacion() {
+    	int numeroAsignacion=0;
+    	List<SegAsignacion> asig=mDAO.findAll(SegAsignacion.class);
+    	for(SegAsignacion a:asig) {
+    		numeroAsignacion=numeroAsignacion+1;
+		}
+		return numeroAsignacion;
+    }
+    //conteo usuario
+    public int ContarUsuario() {
+    	int numeroUsuario=0;
+    	List<SegUsuario> usua=mDAO.findAll(SegUsuario.class);
+    	for(SegUsuario usu:usua) {
+    		numeroUsuario=numeroUsuario+1;
+		}
+		return numeroUsuario;
     }
 
 }

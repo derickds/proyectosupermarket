@@ -88,6 +88,10 @@ public class BeanSegUsuarios implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo modulos
+		public int actionListenerContarUsuarios() {
+			return managerSeguridades.ContarUsuario();
+		}
 
 	public List<SegUsuario> getListaUsuarios() {
 		return listaUsuarios;

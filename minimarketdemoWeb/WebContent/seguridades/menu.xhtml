@@ -31,9 +31,50 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de seguridades"></p:staticMessage>
-	</h:form>
-	<div>
+		</h:form>
+	<div align="center">
+		<h:form>
+			<p:panel style="width:80%">
+				<p:staticMessage severity="info" summary="INFORMACION GENERAL"
+					style="width: 100%" />
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./modulo.jpg" />
+							</f:facet>
+							<f:facet name="title"> Modulos </f:facet>
+							<f:facet name="subtitle">Numero de Modulos</f:facet>
+							<h:outputText
+								value="#{beanSegModulos.actionListenerContarModulos()}" />
+						</p:card>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./usuario.jpg" />
+							</f:facet>
+							<f:facet name="title"> Usuarios </f:facet>
+							<f:facet name="subtitle">Numero de Usuarios</f:facet>
+							<h:outputText
+								value="#{beanSegUsuarios.actionListenerContarUsuarios()}" />
+						</p:card>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./asignacion.png" />
+							</f:facet>
+							<f:facet name="title"> Asignaciones </f:facet>
+							<f:facet name="subtitle">Numero de Asignaciones</f:facet>
+							<h:outputText
+								value="#{beanSegAsignaciones.actionListenerContarAsigacion()}" />
+						</p:card>
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
 	</div>
+
 </body>
 </html>

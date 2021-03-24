@@ -72,6 +72,10 @@ public class BeanSegModulos implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	//conteo modulos
+	public int actionListenerContarModulos() {
+		return mSeguridades.ContarModulos();
+	}
 
 	public List<SegModulo> getListaModulos() {
 		return listaModulos;

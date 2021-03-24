@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import minimarketdemo.model.core.entities.FactDetalle;
+import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.entities.VentRegistro;
 import minimarketdemo.model.core.managers.ManagerDAO;
@@ -58,6 +59,17 @@ public class ManagerVenta {
 		mDAO.insertar(nuevoVenta);
 		return nuevoVenta;
 	}
+	
+	//conteo venta
+    public int ContarVentas() {
+    	int numeroVentas=0;
+    	List<VentRegistro> ven=mDAO.findAll(VentRegistro.class);
+    	for(VentRegistro ve:ven) {
+    		numeroVentas=numeroVentas+1;
+		}
+		return numeroVentas;
+    }
+	
 
 	// Ventas registros:.......
 	public List<VentRegistro> findAllVenta() {

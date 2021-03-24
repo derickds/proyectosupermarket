@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import minimarketdemo.model.core.entities.AudBitacora;
+import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
 
@@ -88,6 +89,15 @@ public class ManagerAuditoria {
     	q.setParameter("fechaFin", new Timestamp(fechaFin.getTime()));
     	return q.getResultList();
     	
+    }
+  //conteo auditoria
+    public int ContarAuditorias() {
+    	int numeroAuditoria=0;
+    	List<AudBitacora> aud=mDAO.findAll(AudBitacora.class);
+    	for(AudBitacora au:aud) {
+    		numeroAuditoria=numeroAuditoria+1;
+		}
+		return numeroAuditoria;
     }
 
 }

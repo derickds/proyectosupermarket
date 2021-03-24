@@ -58,6 +58,12 @@ public class BeanVenta implements Serializable {
 		listafactdetalle = managerVenta.findAllFactDetalle();
 		return "ventas?faces-redirect=true";
 	}
+	//conteo ventas
+		public int actionListenerContarVenta() {
+			return managerVenta.ContarVentas();
+		}
+	
+	
 
 	///// no se utiliza este metodo....
 	public void actionListenerRegistroVenta() {
