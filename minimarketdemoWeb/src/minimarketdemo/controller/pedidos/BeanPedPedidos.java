@@ -231,6 +231,21 @@ public void actionSeleccionarPedido(int idPedido) {
 		return "menu?faces-redirect=true";
 	}
 	
+	public void actionListenerGenerarFactura() {
+		SegUsuario user;
+		try {
+			CliPersona c=pedidoselec.getCliPersona();
+			user = mP.findUsuarioById(loginDTO.getIdSegUsuario());
+			mP.generarFactura(c, user, detalles , pedidoselec.getPedOrden() );
+			JSFUtil.crearMensajeINFO("FACTURA GENERADA");
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	public void actionListenerBuscarStockProducto() {
 		try {
 			listaProductosStock = mFacturacion.findProductoStockWhere(idStock);

@@ -111,10 +111,10 @@ public class ManagerPedidos {
     	}
     }
     
-    public double calcularSubtotal(List<carritoDTO> carrito) {
+    public double calcularSubtotal(List<PedOrdenDetalle> carrito) {
     	double var = 0;
-    	for(carritoDTO car: carrito) {
-    		var = var +(car.getCantidadCompra()*car.getPrecio());
+    	for(PedOrdenDetalle car: carrito) {
+    		var = var +(car.getCantidadOrden()*car.getInvProducto().getPrecio().doubleValue());
     	}
     	return var;
     }
@@ -129,11 +129,34 @@ public class ManagerPedidos {
     	return total;
     }
     
+    public String ceros(int numero) {
+		String n=""+numero;
+		if(n.length()==1) {
+			return "000000000"+n;
+		}else if (n.length()==2) {
+			return "00000000"+n;
+		}else if (n.length()==3) {
+			return "0000000"+n;
+		}else if (n.length()==4) {
+			return "000000"+n;
+		}else if (n.length()==5) {
+			return "00000"+n;
+		}else if (n.length()==6) {
+			return "0000"+n;
+		}else if (n.length()==7) {
+			return "000"+n;
+		}else if (n.length()==8) {
+			return "00"+n;
+		}else if (n.length()==9) {
+			return "0"+n;
+		}
+		return n;
+	}
+    
     
     public void generarPedido(CliPersona persona, SegUsuario usuario, List<carritoDTO> carrito) {
     	PedOrden pedido = new PedOrden();
     	pedido.setCliPersona(persona);
-    	
     	
     	try {
 			mDAO.insertar(pedido);
@@ -155,6 +178,69 @@ public class ManagerPedidos {
 			e.printStackTrace();
 		}
     }
+    
+    public List<FactCabecera> findAllCabecerasFactura(){
+    	return mDAO.findAll(FactCabecera.class, null);
+    }
+   
+    
+    public void generarFactura(CliPersona persona, SegUsuario usuario, List<PedOrdenDetalle> carrito, int idPedido) {
+    	FactDescuento descuento=new FactDescuento();
+    	descuento.setIdFactDescuento(3);
+    	descuento.setNombreDescuento("Pedidos");
+    	descuento.setPorcentajeDescuento(7);
+    	FactCabecera factura = new FactCabecera();
+    	factura.setIdFact("");
+    	factura.setCliPersona(persona);
+    	factura.setFactDescuento(descuento);
+    	factura.setSegUsuario(usuario);
+    	factura.setDireccionLocalCabecera("Teodoro Gómez");
+    	Timestamp tiempo=new Timestamp(System.currentTimeMillis());
+    	factura.setFechaCabecera(tiempo);
+    	
+    	BigDecimal subtotal = new BigDecimal(calcularSubtotal(carrito), MathContext.DECIMAL64);
+    	factura.setSubtotalCabecera(subtotal);
+    	BigDecimal ivaa = new BigDecimal(calcularIva(subtotal.doubleValue(), 0.12), MathContext.DECIMAL64);
+    	factura.setIvaCabecera(ivaa);
+    	BigDecimal total = new BigDecimal(calcularTotal(ivaa.doubleValue(), descuento.getPorcentajeDescuento(), subtotal.doubleValue()), MathContext.DECIMAL64);
+    	factura.setTotalCabecera(total);
+    	
+    	try {
+			mDAO.insertar(factura);
+			factura.setIdFact(ceros(factura.getIdFactCabecera()));
+			mDAO.actualizar(factura);
+			List<FactCabecera> cabeceras = findAllCabecerasFactura();
+			
+	    	for(int i = 0; i < carrito.size(); i++) {
+	    		FactDetalle detalles = new FactDetalle();
+	    		detalles.setCantidadDetalle(carrito.get(i).getCantidadOrden());
+	    		detalles.setCostoUnitarioDetalle(carrito.get(i).getInvProducto().getPrecio());
+	    		detalles.setFactCabecera(cabeceras.get(cabeceras.size()-1));
+	    		detalles.setInvProducto(findProductoById(carrito.get(i).getInvProducto().getIdInvProducto()));
+	    		BigDecimal sub = new BigDecimal(carrito.get(i).getCantidadOrden()*carrito.get(i).getInvProducto().getPrecio().doubleValue(), MathContext.DECIMAL64);
+	    		detalles.setSubTotalDetalle(sub);
+	    		mDAO.insertar(detalles);
+	    		InvStock inventario = (InvStock) mDAO.findById(InvStock.class,carrito.get(i).getInvProducto().getIdInvProducto());
+	    		inventario.setCantidadStockProducto(inventario.getCantidadStockProducto()-carrito.get(i).getCantidadOrden());
+	    		mDAO.actualizar(inventario);
+	    		System.out.println("1");
+	    	}
+	    	eliminarPedidoPagado(idPedido);
+	    	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void eliminarPedidoPagado(int id) throws Exception {
+    	List<PedOrdenDetalle> pedidos=findDetalleByOrden(id);
+    	for(PedOrdenDetalle p:pedidos) {
+    		mDAO.eliminar(PedOrdenDetalle.class, p.getIdPedOrdenDetalle());
+    	}
+    	mDAO.eliminar(PedOrden.class, id);
+    }
+    
     
     public SegUsuario findUsuarioById(int idUsuario)throws Exception {
     	return (SegUsuario) mDAO.findById(SegUsuario.class, idUsuario);
