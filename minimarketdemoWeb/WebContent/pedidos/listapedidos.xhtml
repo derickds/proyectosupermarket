@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Pedidos</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Nuevo pedido" icon="pi pi-home" action="nuevoPed" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+	
+		
+		<h:form id="formDatos">
+			<p:dataTable value="#{beanPedPedidos.listapedido}" var="pr"
+				paginator="true" rows="5">
+				<p:column headerText="ID">
+					<h:outputText value="#{pr.pedOrden}" />
+				</p:column>
+				<p:column headerText="APELLIDO CLIENTE" filterBy="#{pr.cliPersona.nombresPersona}"
+					filterMatchMode="contains">
+					<h:outputText value="#{pr.cliPersona.apellidosPersona}" />
+				</p:column>
+				<p:column headerText="NOMBRE CLIENTE">
+					<h:outputText value="#{pr.cliPersona.nombresPersona}" />
+				</p:column>
+				<p:column headerText="OPCIONES">
+					<p:commandButton icon="pi pi-info" title="informacion"
+					actionListener="#{beanPedPedidos.actionSeleccionarPedido(pr.pedOrden)}"
+					oncomplete="PF('dialogoEdicion').show()" update=":formEdicion"/>
+					
+					<p:commandButton icon="pi pi-times-circle" title="cancelar pedido"
+						styleClass="ui-button-danger" update="@form"
+						actionListener="#{beanPedPedidos.actionListenerEliminarPedido(pr.pedOrden)}">
+						<p:confirm header="Confirmación"
+							message="Desea borrar este pedido?" icon="pi pi-info-circle" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+	
+	<p:dialog header="Detalles" widgetVar="dialogoEdicion">
+		<h:form id="formEdicion">
+			<p:dataTable paginator="true" rows="5" value="#{beanPedPedidos.detalles}" var="dt"> 
+				
+				<p:column headerText="PRODUCTO">
+					<h:outputText value="#{dt.invProducto.nombreProducto}" />
+				</p:column>
+				<p:column headerText="CANTIDAD">
+					<h:outputText value="#{dt.cantidadOrden}" />
+				</p:column>
+				
+			</p:dataTable>
+			<p:commandButton icon="pi pi-times-circle" actionListener="#{beanPedPedidos.actionListenerGenerarFactura()}" update=":formDatos"
+			title="Pagar Pedido"></p:commandButton>
+		</h:form>
+	</p:dialog>
+	
+	
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+	
+	
+	
+	
+</body>
+</html>

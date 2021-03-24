@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Facturación</title>
+	<h:outputStylesheet library="css" name="minimarketdemo.css"></h:outputStylesheet>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="#{beanPedPedidos.cargarMenuLista()}" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	
+	<p:panel>
+		<h:form id="formDatos">
+		<p:panel header = "Datos del Cliente">
+				<p:inputText value="#{beanCliPersona.cedulaClienteFact}"/>
+				<p:commandButton value="Buscar" actionListener="#{beanCliPersona.actionFindByIdCliente()}" update="@form"/>
+				<p:dataGrid value="#{beanCliPersona.clienteFact}" paginator="false" rows="9">
+					<p:panelGrid columns="6">
+						<h:outputText value="Cedula:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.cedulaCliPersona}" requiredMessage="Ingrese el número de cédula del cliente"/>
+						<h:outputText value="Nombres:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.nombresPersona}" requiredMessage="Ingrese los nombres del cliente"/>
+						<h:outputText value="Apellidos:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.apellidosPersona}" requiredMessage="Ingrese los apellidos del cliente"/>
+						<h:outputText value="Correo:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.emailPersona}" requiredMessage="Ingrese el correo del cliente"/>
+						<h:outputText value="Direccion:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.direccionPersona}" requiredMessage="Ingrese la dirección del cliente" />
+						<h:outputText value="Telefono:" />
+						<h:inputText value="#{beanCliPersona.clienteFact.telefonoPersona}" requiredMessage="Ingrese el teléfono del cliente"/>
+					</p:panelGrid>
+				</p:dataGrid>
+			</p:panel>
+			
+			<p:panel header="Datos de Productos">
+				<p:inputText value="#{beanPedPedidos.idStock}" />
+				<p:commandButton value="Buscar" update="@form"
+					actionListener="#{beanPedPedidos.actionListenerBuscarStockProducto()}" />
+				<p:dataGrid value="#{beanPedPedidos.listaProductosStock}"
+					var="p" paginator="true" rows="9">
+					<p:panel header="producto">
+						<h:panelGrid columns="2">
+							<h:outputText value="ID:" />
+							<h:outputText value="#{p.idInvStock}" />
+							<h:outputText value="Nombre:" />
+							<h:outputText value="#{p.invProducto.nombreProducto}" />
+							<h:outputText value="Precio:" />
+							<h:outputText value="#{p.invProducto.precio}" />
+							<h:outputText value="Cantidad:" />
+							<h:outputText value="#{p.cantidadStockProducto}" />
+							<p:commandButton value="Agregar" 
+								actionListener="#{beanPedPedidos.actionSeleccionarCompra(p.idInvStock)}" 
+								oncomplete="PF('dialogoCantidad').show()" update=":formCantidad"/>
+						</h:panelGrid>
+					</p:panel>
+				</p:dataGrid>
+				<p:dataTable value="#{beanPedPedidos.carrito}" var="p2"
+					paginator="true" rows="10">
+					<p:column headerText="ID">
+						<h:outputText value="#{p2.idStock}" />
+					</p:column>
+					<p:column headerText="NOMBRE">
+						<h:outputText value="#{p2.nombreProducto}" />
+					</p:column>
+					<p:column headerText="PRECIO">
+						<h:outputText value="#{p2.precio}" />
+					</p:column>
+					<p:column headerText="CANTIDAD">
+						<h:outputText value="#{p2.cantidadCompra}" />
+					</p:column>
+					<p:column>
+						<p:commandButton value="Eliminar" update="@form"
+							actionListener="#{beanPedPedidos.actionListenerEliminarProducto(p2)}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			
+			<p:commandButton actionListener="#{beanPedPedidos.actionListenerGenerarPedido()}" value="Nuevo pedido" update="@form"></p:commandButton>
+		
+		</h:form>
+	</p:panel>
+	
+	
+	<p:dialog header="Cantidad" widgetVar="dialogoCantidad">
+		<h:form id="formCantidad">
+			<p:panelGrid columns="2" layout="grid">
+				<h:outputText value="Cantidad de productos" />
+				<p:spinner value="#{beanPedPedidos.cantidad}" min="0" stepFactor="1" max="#{beanPedPedidos.compra.cantidadStockProducto}">
+				</p:spinner>
+				<p:commandButton value="Añadir" icon="pi pi-save" update="@form,:formDatos"
+				actionListener="#{beanPedPedidos.actionListenerAgregarProducto()}"></p:commandButton>
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+</body>
+</html>

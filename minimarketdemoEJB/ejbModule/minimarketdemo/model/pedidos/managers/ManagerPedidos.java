@@ -1,4 +1,4 @@
-package minimarketdemo.model.facturacion.managers;
+package minimarketdemo.model.pedidos.managers;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -18,6 +18,8 @@ import minimarketdemo.model.core.entities.FactDescuento;
 import minimarketdemo.model.core.entities.FactDetalle;
 import minimarketdemo.model.core.entities.InvProducto;
 import minimarketdemo.model.core.entities.InvStock;
+import minimarketdemo.model.core.entities.PedOrden;
+import minimarketdemo.model.core.entities.PedOrdenDetalle;
 import minimarketdemo.model.core.entities.RelacMedio;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.SegUsuario;
@@ -29,21 +31,25 @@ import minimarketdemo.model.facturacion.dtos.carritoDTO;
  */
 @Stateless
 @LocalBean
-public class ManagerFacturacion {
+public class ManagerPedidos {
 
 	@EJB
 	private ManagerDAO mDAO;
 	@EJB
 	private ManagerAuditoria mAuditoria;
 	
-    public ManagerFacturacion() {
+    public ManagerPedidos() {
         // TODO Auto-generated constructor stub
     }
     
   //Manejo Cabecera Factura  *********************************************************************************
-    public List<FactCabecera> findAllCabecerasFactura(){
-    	return mDAO.findAll(FactCabecera.class, null);
+    public List<PedOrden> findAllPedidos(){
+    	return mDAO.findAll(PedOrden.class, null);
     }
+    public List<PedOrdenDetalle> findAllDetalles(){
+    	return mDAO.findAll(PedOrdenDetalle.class, null);
+    }
+    
     
     public List<InvStock> findAllProductosDisponibles(){
     	List<InvStock> listaStock = mDAO.findAll(InvStock.class, null);
@@ -56,29 +62,6 @@ public class ManagerFacturacion {
     	}
     	return listaStock;
     }
-    public String ceros(int numero) {
-		String n=""+numero;
-		if(n.length()==1) {
-			return "000000000"+n;
-		}else if (n.length()==2) {
-			return "00000000"+n;
-		}else if (n.length()==3) {
-			return "0000000"+n;
-		}else if (n.length()==4) {
-			return "000000"+n;
-		}else if (n.length()==5) {
-			return "00000"+n;
-		}else if (n.length()==6) {
-			return "0000"+n;
-		}else if (n.length()==7) {
-			return "000"+n;
-		}else if (n.length()==8) {
-			return "00"+n;
-		}else if (n.length()==9) {
-			return "0"+n;
-		}
-		return n;
-	}
     
     public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p,int cantidad)  throws Exception{
     	if(carrito==null) {
@@ -128,10 +111,10 @@ public class ManagerFacturacion {
     	}
     }
     
-    public double calcularSubtotal(List<carritoDTO> carrito) {
+    public double calcularSubtotal(List<PedOrdenDetalle> carrito) {
     	double var = 0;
-    	for(carritoDTO car: carrito) {
-    		var = var +(car.getCantidadCompra()*car.getPrecio());
+    	for(PedOrdenDetalle car: carrito) {
+    		var = var +(car.getCantidadOrden()*car.getInvProducto().getPrecio().doubleValue());
     	}
     	return var;
     }
@@ -146,8 +129,66 @@ public class ManagerFacturacion {
     	return total;
     }
     
+    public String ceros(int numero) {
+		String n=""+numero;
+		if(n.length()==1) {
+			return "000000000"+n;
+		}else if (n.length()==2) {
+			return "00000000"+n;
+		}else if (n.length()==3) {
+			return "0000000"+n;
+		}else if (n.length()==4) {
+			return "000000"+n;
+		}else if (n.length()==5) {
+			return "00000"+n;
+		}else if (n.length()==6) {
+			return "0000"+n;
+		}else if (n.length()==7) {
+			return "000"+n;
+		}else if (n.length()==8) {
+			return "00"+n;
+		}else if (n.length()==9) {
+			return "0"+n;
+		}
+		return n;
+	}
     
-    public void generarFactura(CliPersona persona, FactDescuento descuento, SegUsuario usuario, List<carritoDTO> carrito) {
+    
+    public void generarPedido(CliPersona persona, SegUsuario usuario, List<carritoDTO> carrito) {
+    	PedOrden pedido = new PedOrden();
+    	pedido.setCliPersona(persona);
+    	
+    	try {
+			mDAO.insertar(pedido);
+			List<PedOrden> listaPedido = findAllPedidos();
+			
+	    	for(int i = 0; i < carrito.size(); i++) {
+	    		PedOrdenDetalle dt = new PedOrdenDetalle();
+	    		dt.setCantidadOrden(carrito.get(i).getCantidadCompra());
+	    		dt.setPedOrdenBean(listaPedido.get(listaPedido.size()-1));
+	    		dt.setInvProducto(findProductoById(carrito.get(i).getIdProducto()));
+	    		mDAO.insertar(dt);
+	    		InvStock inventario = (InvStock) mDAO.findById(InvStock.class,carrito.get(i).getIdProducto());
+	    		inventario.setCantidadStockProducto(inventario.getCantidadStockProducto()-carrito.get(i).getCantidadCompra());
+	    		mDAO.actualizar(inventario);
+	    	}
+	    	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public List<FactCabecera> findAllCabecerasFactura(){
+    	return mDAO.findAll(FactCabecera.class, null);
+    }
+   
+    
+    public void generarFactura(CliPersona persona, SegUsuario usuario, List<PedOrdenDetalle> carrito, int idPedido) {
+    	FactDescuento descuento=new FactDescuento();
+    	descuento.setIdFactDescuento(3);
+    	descuento.setNombreDescuento("Pedidos");
+    	descuento.setPorcentajeDescuento(7);
     	FactCabecera factura = new FactCabecera();
     	factura.setIdFact("");
     	factura.setCliPersona(persona);
@@ -172,25 +213,34 @@ public class ManagerFacturacion {
 			
 	    	for(int i = 0; i < carrito.size(); i++) {
 	    		FactDetalle detalles = new FactDetalle();
-	    		detalles.setCantidadDetalle(carrito.get(i).getCantidadCompra());
-	    		BigDecimal costo = new BigDecimal(carrito.get(i).getPrecio(), MathContext.DECIMAL64);
-	    		detalles.setCostoUnitarioDetalle(costo);
+	    		detalles.setCantidadDetalle(carrito.get(i).getCantidadOrden());
+	    		detalles.setCostoUnitarioDetalle(carrito.get(i).getInvProducto().getPrecio());
 	    		detalles.setFactCabecera(cabeceras.get(cabeceras.size()-1));
-	    		detalles.setInvProducto(findProductoById(carrito.get(i).getIdProducto()));
-	    		BigDecimal sub = new BigDecimal(carrito.get(i).getCantidadCompra()*carrito.get(i).getPrecio(), MathContext.DECIMAL64);
+	    		detalles.setInvProducto(findProductoById(carrito.get(i).getInvProducto().getIdInvProducto()));
+	    		BigDecimal sub = new BigDecimal(carrito.get(i).getCantidadOrden()*carrito.get(i).getInvProducto().getPrecio().doubleValue(), MathContext.DECIMAL64);
 	    		detalles.setSubTotalDetalle(sub);
 	    		mDAO.insertar(detalles);
-	    		InvStock inventario = (InvStock) mDAO.findById(InvStock.class,carrito.get(i).getIdProducto());
-	    		inventario.setCantidadStockProducto(inventario.getCantidadStockProducto()-carrito.get(i).getCantidadCompra());
+	    		InvStock inventario = (InvStock) mDAO.findById(InvStock.class,carrito.get(i).getInvProducto().getIdInvProducto());
+	    		inventario.setCantidadStockProducto(inventario.getCantidadStockProducto()-carrito.get(i).getCantidadOrden());
 	    		mDAO.actualizar(inventario);
 	    		System.out.println("1");
 	    	}
+	    	eliminarPedidoPagado(idPedido);
 	    	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
+    
+    public void eliminarPedidoPagado(int id) throws Exception {
+    	List<PedOrdenDetalle> pedidos=findDetalleByOrden(id);
+    	for(PedOrdenDetalle p:pedidos) {
+    		mDAO.eliminar(PedOrdenDetalle.class, p.getIdPedOrdenDetalle());
+    	}
+    	mDAO.eliminar(PedOrden.class, id);
+    }
+    
     
     public SegUsuario findUsuarioById(int idUsuario)throws Exception {
     	return (SegUsuario) mDAO.findById(SegUsuario.class, idUsuario);
@@ -202,6 +252,13 @@ public class ManagerFacturacion {
     
     public InvStock findStockById(int idProducto) throws Exception {
     	return (InvStock) mDAO.findById(InvStock.class, idProducto);
+    }
+    public PedOrden findPedidoById(int idPedido) throws Exception {
+    	return (PedOrden) mDAO.findById(PedOrden.class, idPedido);
+    }
+    public List<PedOrdenDetalle> findDetalleByOrden(int idPedido) throws Exception {
+    	List<PedOrdenDetalle> deta=mDAO.findWhere(PedOrdenDetalle.class,"ped_orden="+idPedido, null);
+    	return deta;
     }
     //Manejo Detalle Factura *********************************************************************************
     public List<FactDetalle> findAllDetallesFactura()  throws Exception{
@@ -238,7 +295,22 @@ public class ManagerFacturacion {
     		throw new Exception("No se puede eliminar el Descuento porque existen Relaciones con este Medio");
     	mDAO.eliminar(FactDescuento.class, descuento.getIdFactDescuento());
     }
-    
+    public void eliminarPedido(int idOrden) throws Exception {
+    	PedOrden orden=(PedOrden)mDAO.findById(PedOrden.class, idOrden);
+    	List<PedOrdenDetalle> deta=findDetalleByOrden(orden.getPedOrden());
+    	List<PedOrden> listaPedido = findAllPedidos();
+		
+    	for(int i = 0; i < deta.size(); i++) {
+    		PedOrdenDetalle dt = new PedOrdenDetalle();
+    		dt=deta.get(i);
+    		InvStock stock=new InvStock();
+    		stock=findStockById(dt.getInvProducto().getIdInvProducto());
+    		stock.setCantidadStockProducto(stock.getCantidadStockProducto()+dt.getCantidadOrden());
+    		mDAO.actualizar(stock);
+    		mDAO.eliminar(PedOrdenDetalle.class,dt.getIdPedOrdenDetalle());
+    	}
+    	mDAO.eliminar(PedOrden.class, orden.getPedOrden());
+    }
     //Buscar por id
     public FactDescuento findByIdDescuento(int idDescuento)  throws Exception{
     	return (FactDescuento) mDAO.findById(FactDescuento.class, idDescuento);
