@@ -56,6 +56,29 @@ public class ManagerFacturacion {
     	}
     	return listaStock;
     }
+    public String ceros(int numero) {
+		String n=""+numero;
+		if(n.length()==1) {
+			return "000000000"+n;
+		}else if (n.length()==2) {
+			return "00000000"+n;
+		}else if (n.length()==3) {
+			return "0000000"+n;
+		}else if (n.length()==4) {
+			return "000000"+n;
+		}else if (n.length()==5) {
+			return "00000"+n;
+		}else if (n.length()==6) {
+			return "0000"+n;
+		}else if (n.length()==7) {
+			return "000"+n;
+		}else if (n.length()==8) {
+			return "00"+n;
+		}else if (n.length()==9) {
+			return "0"+n;
+		}
+		return n;
+	}
     
     public List<carritoDTO> agregarProductoCarrito(List<carritoDTO> carrito, InvStock p,int cantidad)  throws Exception{
     	if(carrito==null) {
@@ -143,6 +166,8 @@ public class ManagerFacturacion {
     	
     	try {
 			mDAO.insertar(factura);
+			factura.setIdFact(ceros(factura.getIdFactCabecera()));
+			mDAO.actualizar(factura);
 			List<FactCabecera> cabeceras = findAllCabecerasFactura();
 			
 	    	for(int i = 0; i < carrito.size(); i++) {
