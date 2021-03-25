@@ -117,8 +117,6 @@ public class ManagerSeguridades {
     		mAuditoria.mostrarLog(loginDTO,getClass(), "login", "Login exitoso: "+idSegUsuario);
     		loginDTO.setCorreo(usuario.getCorreo());
     		//aqui puede realizarse el envio de correo de notificacion
-    		
-    		
     		//obtener la lista de modulos a los que tiene acceso:
     		List<SegAsignacion> listaAsignaciones=findAsignacionByUsuario(usuario.getIdSegUsuario());
     		for(SegAsignacion asig:listaAsignaciones) {
@@ -131,12 +129,19 @@ public class ManagerSeguridades {
     	throw new Exception("Error en credenciales");
     }
     
-    public void cerrarSesion(int idSegUsuario) {
-    	mAuditoria.mostrarLog(getClass(), "cerrarSesion", "Cerrar sesiónn usuario: "+idSegUsuario);
+    public LoginDTO cerrarSesion(int idSegUsuario, String direccionIP) {
+    	LoginDTO loginDTO=new LoginDTO();
+		loginDTO.setIdSegUsuario(idSegUsuario);
+		loginDTO.setDireccionIP(direccionIP);
+    	mAuditoria.mostrarLog(loginDTO, getClass(), "cerrarSesion", "Cerrar sesiónn usuario: "+idSegUsuario);
+    	return loginDTO;
     }
     
-    public void accesoNoPermitido(int idSegUsuario,String ruta) {
-    	mAuditoria.mostrarLog(getClass(), "accesoNoPermitido", "Usuario "+idSegUsuario+" intento no autorizado a "+ruta);
+    public void accesoNoPermitido(int idSegUsuario,String ruta, String direccionIP) {
+    	LoginDTO loginDTO=new LoginDTO();
+		loginDTO.setIdSegUsuario(idSegUsuario);
+		loginDTO.setDireccionIP(direccionIP);
+    	mAuditoria.mostrarLog(loginDTO, getClass(), "accesoNoPermitido", "Usuario "+idSegUsuario+" intento no autorizado a "+ruta);
     }
     
     public List<SegUsuario> findAllUsuarios(){
