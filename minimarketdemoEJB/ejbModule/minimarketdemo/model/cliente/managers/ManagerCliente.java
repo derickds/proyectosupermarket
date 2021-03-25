@@ -1,6 +1,8 @@
 package minimarketdemo.model.cliente.managers;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -11,6 +13,7 @@ import minimarketdemo.model.core.managers.ManagerDAO;
 
 /**
  * Session Bean implementation class ManagerCliente
+ * 
  * @author derick
  *
  */
@@ -19,46 +22,47 @@ import minimarketdemo.model.core.managers.ManagerDAO;
 public class ManagerCliente {
 	@EJB
 	private ManagerDAO mDAO;
-	
+
 	public ManagerCliente() {
-		
+
 	}
-	
-	//Persona
-	public List<CliPersona> findAllPersonas(){
+
+	// Persona
+	public List<CliPersona> findAllPersonas() {
 		return mDAO.findAll(CliPersona.class);
 	}
-	
+
 	public CliPersona findByIdPersona(String cedulaCliPersona) throws Exception {
 		CliPersona cliente = (CliPersona) mDAO.findById(CliPersona.class, cedulaCliPersona);
-		if(cliente==null) {
+		if (cliente == null) {
 			cliente = new CliPersona();
 		}
 		return cliente;
 	}
-	
+
 	public boolean verificarClienteFactura(CliPersona clienteFact) {
-		for(CliPersona c : findAllPersonas()) {
-			if(c.getCedulaCliPersona().equals(clienteFact.getCedulaCliPersona())) {
+		for (CliPersona c : findAllPersonas()) {
+			if (c.getCedulaCliPersona().equals(clienteFact.getCedulaCliPersona())) {
 				return true;
 			}
 		}
-		return false;	
+		return false;
 	}
-	
-	public void insertarPersona(CliPersona nuevoCliente) throws Exception{
+
+	public void insertarPersona(CliPersona nuevoCliente) throws Exception {
 		mDAO.insertar(nuevoCliente);
 	}
-	
-	public void eliminarPersona(String cedulaCliPersona) throws Exception{
+
+	public void eliminarPersona(String cedulaCliPersona) throws Exception {
 		CliPersona cliente = (CliPersona) mDAO.findById(CliPersona.class, cedulaCliPersona);
-		if(cliente.getRelacClientes().size()>0 || cliente.getFactCabeceras().size()>0 || cliente.getPedOrdens().size()>0) {
+		if (cliente.getRelacClientes().size() > 0 || cliente.getFactCabeceras().size() > 0
+				|| cliente.getPedOrdens().size() > 0) {
 			throw new Exception("No se puede eliminar porque existen relaciones con este cliente");
-		}else {
+		} else {
 			mDAO.eliminar(CliPersona.class, cedulaCliPersona);
 		}
 	}
-	
+
 	public void actualizarPersona(CliPersona edicioncliente) throws Exception {
 		CliPersona cliente = (CliPersona) mDAO.findById(CliPersona.class, edicioncliente.getCedulaCliPersona());
 		cliente.setApellidosPersona(edicioncliente.getApellidosPersona());
@@ -68,21 +72,21 @@ public class ManagerCliente {
 		cliente.setDireccionPersona(edicioncliente.getDireccionPersona());
 		mDAO.actualizar(cliente);
 	}
-	
+
 	public int contarClientes() {
-		int numeroClientes=0;
-		List<CliPersona> cliente=mDAO.findAll(CliPersona.class);
-		for(CliPersona cli:cliente) {
-			numeroClientes=numeroClientes+1;
+		int numeroClientes = 0;
+		List<CliPersona> cliente = mDAO.findAll(CliPersona.class);
+		for (CliPersona cli : cliente) {
+			numeroClientes = numeroClientes + 1;
 		}
 		return numeroClientes;
 	}
 
 	public CliPersona clienteMasReciente() {
-		CliPersona c=new CliPersona();
-		List<CliPersona> cliente=mDAO.findAll(CliPersona.class);
-		for(CliPersona cli:cliente) {
-			c=cli;
+		CliPersona c = new CliPersona();
+		List<CliPersona> cliente = mDAO.findAll(CliPersona.class);
+		for (CliPersona cli : cliente) {
+			c = cli;
 		}
 		return c;
 	}

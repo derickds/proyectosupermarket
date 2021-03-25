@@ -33,22 +33,28 @@
 	<p:panel>
 		<h:form id="formDatos">
 		<p:panel header = "Datos del Cliente">
-				<p:inputText value="#{beanCliPersona.cedulaClienteFact}"/>
+				<p:inputText value="#{beanCliPersona.cedulaClienteFact}" maxlength="10"/>
 				<p:commandButton value="Buscar" actionListener="#{beanCliPersona.actionFindByIdCliente()}" update="@form"/>
-				<p:dataGrid value="#{beanCliPersona.clienteFact}" paginator="false" rows="9">
+				<p:dataGrid value="#{beanCliPersona.clienteFact}" paginator="false" rows="9" emptyMessage="Datos del cliente">
 					<p:panelGrid columns="6">
 						<h:outputText value="Cedula:" />
-						<h:inputText value="#{beanCliPersona.clienteFact.cedulaCliPersona}" requiredMessage="Ingrese el número de cédula del cliente"/>
+						<h:inputText value="#{beanCliPersona.clienteFact.cedulaCliPersona}" 
+						required="true" requiredMessage="Ingrese el número de cédula del cliente" maxlength="10"/>
 						<h:outputText value="Nombres:" />
-						<h:inputText value="#{beanCliPersona.clienteFact.nombresPersona}" requiredMessage="Ingrese los nombres del cliente"/>
+						<h:inputText value="#{beanCliPersona.clienteFact.nombresPersona}" 
+						required="true" requiredMessage="Ingrese los nombres del cliente" maxlength="25"/>
 						<h:outputText value="Apellidos:" />
-						<h:inputText value="#{beanCliPersona.clienteFact.apellidosPersona}" requiredMessage="Ingrese los apellidos del cliente"/>
+						<h:inputText value="#{beanCliPersona.clienteFact.apellidosPersona}" 
+						required="true" requiredMessage="Ingrese los apellidos del cliente" maxlength="25"/>
 						<h:outputText value="Correo:" />
-						<h:inputText value="#{beanCliPersona.clienteFact.emailPersona}" requiredMessage="Ingrese el correo del cliente"/>
+						<h:inputText value="#{beanCliPersona.clienteFact.emailPersona}" 
+						required="true" requiredMessage="Ingrese el correo del cliente" maxlength="30"/>
 						<h:outputText value="Direccion:" />
-						<h:inputText value="#{beanCliPersona.clienteFact.direccionPersona}" requiredMessage="Ingrese la dirección del cliente" />
+						<h:inputText value="#{beanCliPersona.clienteFact.direccionPersona}" 
+						required="true" requiredMessage="Ingrese la dirección del cliente" maxlength="50"/>
 						<h:outputText value="Telefono:" />
-						<h:inputText value="#{beanCliPersona.clienteFact.telefonoPersona}" requiredMessage="Ingrese el teléfono del cliente"/>
+						<h:inputText value="#{beanCliPersona.clienteFact.telefonoPersona}" 
+						required="true" requiredMessage="Ingrese el teléfono del cliente" maxlength="10"/>
 					</p:panelGrid>
 				</p:dataGrid>
 			</p:panel>

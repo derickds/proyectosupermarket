@@ -33,22 +33,22 @@
 			<p:panelGrid columns="2">
 			<h:outputText value="Cédula:" />
 				<p:inputText value="#{beanCliPersona.nuevaPersona.cedulaCliPersona}"
-					required="true" requiredMessage="Ingrese la cédula del cliente"/>
+					required="true" requiredMessage="Ingrese la cédula del cliente" maxlength="10" />
 				<h:outputText value="Nombres:" />
 				<p:inputText value="#{beanCliPersona.nuevaPersona.nombresPersona}"
-					required="true" requiredMessage="Ingrese el nombre del cliente" />
+					required="true" requiredMessage="Ingrese el nombre del cliente" maxlength="25"/>
 				<h:outputText value="Apellidos:" />
 				<p:inputText value="#{beanCliPersona.nuevaPersona.apellidosPersona}"
-					required="true" requiredMessage="Ingrese el apellido del cliente" />
+					required="true" requiredMessage="Ingrese el apellido del cliente" maxlength="25"/>
 				<h:outputText value="Email:" />
 				<p:inputText value="#{beanCliPersona.nuevaPersona.emailPersona}"
-					required="true" requiredMessage="Ingrese el email del cliente" />
+					required="true" requiredMessage="Ingrese el email del cliente" maxlength="30"/>
 				<h:outputText value="Teléfono:" />
 				<p:inputText value="#{beanCliPersona.nuevaPersona.telefonoPersona}"
-					required="true" requiredMessage="Ingrese el teléfono del cliente" />
+					required="true" requiredMessage="Ingrese el teléfono del cliente" maxlength="10" pattern="^0(?:9)\d{8}$"/>
 				<h:outputText value="Dirección:" />
 				<p:inputText value="#{beanCliPersona.nuevaPersona.direccionPersona}"
-					required="true" requiredMessage="Ingrese la dirección del cliente" />
+					required="true" requiredMessage="Ingrese la dirección del cliente" maxlength="50"/>
 				<p:commandButton value="Guardar" icon="pi pi-save" update="@form"
 				actionListener="#{beanCliPersona.actionListenerInsertarNuevaPersona()}"></p:commandButton>
 			</p:panelGrid>
