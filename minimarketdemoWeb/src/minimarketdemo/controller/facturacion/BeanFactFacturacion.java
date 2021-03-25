@@ -69,6 +69,9 @@ public class BeanFactFacturacion implements Serializable {
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaProductosStock.size());
 	}
 	
+	public int actionListenerContarFacturasDia() {
+		return mFacturacion.findFacturasByHoy();
+	}
 	
 	public void actionSeleccionarCompra(int p) {
 		try {

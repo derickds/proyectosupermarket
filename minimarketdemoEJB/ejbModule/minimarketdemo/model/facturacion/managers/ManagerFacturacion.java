@@ -3,6 +3,7 @@ package minimarketdemo.model.facturacion.managers;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.CliPersona;
@@ -22,6 +24,7 @@ import minimarketdemo.model.core.entities.RelacMedio;
 import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.managers.ManagerDAO;
+import minimarketdemo.model.core.utils.ModelUtil;
 import minimarketdemo.model.facturacion.dtos.carritoDTO;
 
 /**
@@ -194,6 +197,20 @@ public class ManagerFacturacion {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+    public int findFacturasByHoy(){
+
+    	Timestamp tiempo=new Timestamp(System.currentTimeMillis());
+    	Date fechaInicio=ModelUtil.addDays(tiempo, -1);
+    	Date fechaFin=ModelUtil.addDays(tiempo, 1);
+    	SimpleDateFormat format=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	String consulta="select b from FactCabecera b where b.fechaCabecera between :fechaInicio and :fechaFin";
+    	Query q=mDAO.getEntityManager().createQuery(consulta,FactCabecera.class);
+    	q.setParameter("fechaInicio", new Timestamp(fechaInicio.getTime()));
+    	q.setParameter("fechaFin", new Timestamp(fechaFin.getTime()));
+    	return q.getResultList().size();
+    	
     }
     
     public SegUsuario findUsuarioById(int idUsuario)throws Exception {
