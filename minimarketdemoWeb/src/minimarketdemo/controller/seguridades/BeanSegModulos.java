@@ -39,7 +39,7 @@ public class BeanSegModulos implements Serializable {
 		try {
 			mSeguridades.insertarModulo(nuevoModulo);
 			listaModulos=mSeguridades.findAllModulos();
-			JSFUtil.crearMensajeINFO("Módulo creado.");
+			JSFUtil.crearMensajeINFO("Modulo creado.");
 			nuevoModulo=new SegModulo();
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
@@ -54,7 +54,7 @@ public class BeanSegModulos implements Serializable {
 	public void actionListenerGuardarEdicionModulo() {
 		try {
 			mSeguridades.actualizarModulo(edicionModulo);
-			JSFUtil.crearMensajeINFO("Módulo editado.");
+			JSFUtil.crearMensajeINFO("Modulo editado.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class BeanSegModulos implements Serializable {
 		try {
 			mSeguridades.eliminarModulo(idSegModulo);
 			listaModulos=mSeguridades.findAllModulos();
-			JSFUtil.crearMensajeINFO("Módulo eliminado");
+			JSFUtil.crearMensajeINFO("Modulo eliminado");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();

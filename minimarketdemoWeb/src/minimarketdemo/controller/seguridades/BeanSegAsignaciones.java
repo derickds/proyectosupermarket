@@ -45,7 +45,7 @@ public class BeanSegAsignaciones implements Serializable {
 		try {
 			managerSeguridades.asignarModulo(idSegUsuarioSeleccionado, idSegModulo);
 			listaAsignaciones=managerSeguridades.findAsignacionByUsuario(idSegUsuarioSeleccionado);
-			JSFUtil.crearMensajeINFO("Módulo asignado.");
+			JSFUtil.crearMensajeINFO("Modulo asignado.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();
