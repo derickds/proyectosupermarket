@@ -172,6 +172,10 @@ public class BeanPedPedidos implements Serializable {
 		}
 	}
 	
+	public int actionListenerContarPedidos() {
+		return mP.ContarPedidos();
+	}
+	
 	public void actionListenerCalcularSubtotal() {
 		subTotal = mFacturacion.calcularSubtotal(carrito);
 	}

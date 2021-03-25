@@ -28,9 +28,29 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de pedidos"></p:staticMessage>
 	</h:form>
-	<div>
+	<div align="center">
+		<h:form>
+			<p:panel style="width:80%">
+				<p:staticMessage severity="info" summary="INFORMACION GENERAL"
+					style="width: 100%" />
+				<div class="ui-g">
+				<div class="ui-g-12 ui-md-4">
+				</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./pedidos.png" />
+							</f:facet>
+							<f:facet name="title"> Pedidos </f:facet>
+							<f:facet name="subtitle">Numero de Pedidos Pendientes</f:facet>
+							<h:outputText
+								value="#{beanPedPedidos.actionListenerContarPedidos()}" />
+						</p:card>
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
 	</div>
 </body>
 </html>

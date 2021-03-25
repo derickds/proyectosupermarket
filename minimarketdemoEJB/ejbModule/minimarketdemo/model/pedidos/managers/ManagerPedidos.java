@@ -12,6 +12,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.AudBitacora;
 import minimarketdemo.model.core.entities.CliPersona;
 import minimarketdemo.model.core.entities.FactCabecera;
 import minimarketdemo.model.core.entities.FactDescuento;
@@ -239,6 +240,15 @@ public class ManagerPedidos {
     		mDAO.eliminar(PedOrdenDetalle.class, p.getIdPedOrdenDetalle());
     	}
     	mDAO.eliminar(PedOrden.class, id);
+    }
+    
+    public int ContarPedidos() {
+    	int numeroPedidos=0;
+    	List<PedOrden> ped=mDAO.findAll(PedOrden.class);
+    	for(PedOrden pe:ped) {
+    		numeroPedidos=numeroPedidos+1;
+		}
+		return numeroPedidos;
     }
     
     
