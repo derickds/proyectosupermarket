@@ -165,7 +165,7 @@ public class BeanFactFacturacion implements Serializable {
 			user = mFacturacion.findUsuarioById(loginDTO.getIdSegUsuario());
 			mFacturacion.generarFactura(clienteFact, descuento, user, carrito);
 			
-			JSFUtil.crearMensajeINFO("�FACTURA REALIZADA!");
+			JSFUtil.crearMensajeINFO("FACTURA REALIZADA!");
 			listaProductosStock = mFacturacion.findAllProductosDisponibles();
 			clienteFact = new CliPersona();
 			subTotal = 0;

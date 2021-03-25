@@ -75,10 +75,10 @@
 					<p:commandButton icon="pi pi-pencil" title="editar"
 					actionListener="#{beanInvProducto.actionSeleccionarEdicionProducto(pr.invProducto)}"
 					oncomplete="PF('dialogoEdicion').show()" update=":formEdicion"/>
-					<p:commandButton icon="pi pi-pencil" title="ingresos"
+					<p:commandButton icon="pi pi-pencil" title="ingresos" styleClass="ui-button-success"
 					actionListener="#{beanInvProducto.actionSeleccionarEdicionStock(pr.idInvStock)}"
 					oncomplete="PF('dialogoIngreso').show()" update=":formIngresos"/>
-					<p:commandButton icon="pi pi-pencil" title="egresos"
+					<p:commandButton icon="pi pi-pencil" title="egresos" styleClass="ui-button-warning"
 					actionListener="#{beanInvProducto.actionSeleccionarEdicionStock(pr.idInvStock)}"
 					oncomplete="PF('dialogoEgreso').show()" update=":formEgresos"/>
 					<p:commandButton icon="pi pi-times-circle" title="eliminar"

@@ -80,7 +80,7 @@ public class BeanSegUsuarios implements Serializable {
 	
 	public void actionListenerEliminarUsuario(int idSegUsuario) {
 		try {
-			managerSeguridades.eliminarUsuario(idSegUsuario);
+			managerSeguridades.eliminarUsuario(idSegUsuario, beanSegLogin.getLoginDTO());
 			listaUsuarios=managerSeguridades.findAllUsuarios();
 			JSFUtil.crearMensajeINFO("Usuario eliminado.");
 		} catch (Exception e) {

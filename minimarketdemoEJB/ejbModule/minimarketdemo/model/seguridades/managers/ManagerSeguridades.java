@@ -82,7 +82,7 @@ public class ManagerSeguridades {
 		modulo.setRutaAcceso("auditoria/menu");
 		mDAO.insertar(modulo);
 		idSegModuloAuditoria=modulo.getIdSegModulo();
-		mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Módulos creados.");
+		mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Modulos creados.");
 		//asignacion de accesos:
 		asignarModulo(idSegUsuarioAdmin, idSegModuloSeguridades);
 		asignarModulo(idSegUsuarioAdmin, idSegModuloAuditoria);
@@ -175,13 +175,14 @@ public class ManagerSeguridades {
     	mDAO.actualizar(usuario);
     }
     
-    public void eliminarUsuario(int idSegUsuario) throws Exception {
+    public void eliminarUsuario(int idSegUsuario, LoginDTO loginDTO) throws Exception {
     	SegUsuario usuario=(SegUsuario) mDAO.findById(SegUsuario.class, idSegUsuario);
     	if(usuario.getIdSegUsuario()==1)
     		throw new Exception("No se puede eliminar el usuario administrador.");
     	if(usuario.getSegAsignacions().size()>0)
-    		throw new Exception("No se puede elimininar el usuario porque tiene asignaciones de módulos.");
+    		throw new Exception("No se puede elimininar el usuario porque tiene asignaciones de modulos.");
     	mDAO.eliminar(SegUsuario.class, usuario.getIdSegUsuario());
+    	mAuditoria.mostrarLog(loginDTO,getClass(), "eliminarUsuario", "Usuario eliminado por: "+loginDTO.getIdSegUsuario());
     }
     
     public List<SegModulo> findAllModulos(){
@@ -229,7 +230,6 @@ public class ManagerSeguridades {
     	asignacion.setSegUsuario(usuario);
     	//guardar la asignacion:
     	mDAO.insertar(asignacion);
-    	mAuditoria.mostrarLog(getClass(), "asignarModulo", "Modulo "+idSegModulo+" asigando a usuario "+idSegUsuario);
     }
     
     public void eliminarAsignacion(int idSegAsignacion) throws Exception {

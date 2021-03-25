@@ -50,10 +50,6 @@
 					<h:outputText value="#{usuario.correo}" />
 				</p:column>
 				<p:column headerText="OPCIONES">
-					<p:commandButton icon="pi pi-check-circle"
-						title="activar/desactivar" styleClass="ui-button-warning"
-						update="@form"
-						actionListener="#{beanSegUsuarios.actionListenerActivarDesactivarUsuario(usuario.idSegUsuario)}" />
 					<p:commandButton icon="pi pi-pencil" title="editar"
 						action="#{beanSegUsuarios.actionSeleccionarEdicionUsuario(usuario)}" />
 					<p:commandButton icon="pi pi-times-circle" title="eliminar"

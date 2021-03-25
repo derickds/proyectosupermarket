@@ -31,24 +31,13 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		</h:form>
+	</h:form>
 	<div align="center">
 		<h:form>
 			<p:panel style="width:80%">
 				<p:staticMessage severity="info" summary="INFORMACION GENERAL"
 					style="width: 100%" />
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-4">
-						<p:card style="width: 100%">
-							<f:facet name="header">
-								<img alt="user header" src="./modulo.png" height="300px"/>
-							</f:facet>
-							<f:facet name="title"> Modulos </f:facet>
-							<f:facet name="subtitle">Numero de Modulos</f:facet>
-							<h:outputText
-								value="#{beanSegModulos.actionListenerContarModulos()}" />
-						</p:card>
-					</div>
 					<div class="ui-g-12 ui-md-4">
 						<p:card style="width: 100%">
 							<f:facet name="header">
@@ -60,6 +49,18 @@
 								value="#{beanSegUsuarios.actionListenerContarUsuarios()}" />
 						</p:card>
 					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:card style="width: 100%">
+							<f:facet name="header">
+								<img alt="user header" src="./modulo.png" height="300px" />
+							</f:facet>
+							<f:facet name="title"> Modulos </f:facet>
+							<f:facet name="subtitle">Numero de Modulos</f:facet>
+							<h:outputText
+								value="#{beanSegModulos.actionListenerContarModulos()}" />
+						</p:card>
+					</div>
+
 					<div class="ui-g-12 ui-md-4">
 						<p:card style="width: 100%">
 							<f:facet name="header">

@@ -6,24 +6,26 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Login Supermercado Mi Rey</title>
+	<title>Supermercado Mi Rey</title>
 </h:head>
 <body>
 	<div align="center">
-	<p:messages>
-		<p:autoUpdate />
-	</p:messages>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
 		<h:form>
-			<p:panel>
+			<p:panel header="Supermercado Mi Rey Login" style="width:35%">
+				<img src="./login.png" alt="Login" width="40%" height="40%" />
 				<p:panelGrid columns="2">
 					<h:outputText value="Id de usuario:" />
 					<p:inputText value="#{beanSegLogin.idSegUsuario}" />
 					<h:outputText value="Clave:" />
 					<p:password value="#{beanSegLogin.clave}" />
-					<p:commandButton value="Login"
-						action="#{beanSegLogin.actionLogin()}" icon="pi pi-key"></p:commandButton>
+					<f:facet name="footer">
+						<p:commandButton value="Login"
+							action="#{beanSegLogin.actionLogin()}" icon="fa fa-lock"></p:commandButton>
+					</f:facet>
 				</p:panelGrid>
-				
 			</p:panel>
 		</h:form>
 	</div>

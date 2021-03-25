@@ -33,7 +33,7 @@
 	<p:panel>
 		<h:form id="formDatos">
 		<p:panel header = "Datos del Cliente">
-				<p:inputText value="#{beanCliPersona.cedulaClienteFact}"/>
+				<p:inputText value="#{beanCliPersona.cedulaClienteFact}" requiredMessage="Ingrese un cliente"/>
 				<p:commandButton value="Buscar" actionListener="#{beanCliPersona.actionFindByIdCliente()}" update="@form"/>
 				<p:dataGrid value="#{beanCliPersona.clienteFact}" paginator="false" rows="9">
 					<p:panelGrid columns="6">

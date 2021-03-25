@@ -24,31 +24,31 @@
 
 	<div align="center">
 		<h:form>
-			<p:panel style="width:50%">
+			<p:panel style="width:80%">
 				<p:staticMessage severity="info" summary="SISTEMA SUPERMERCADO MI REY"
 					style="width: 100%" />
 				<p:dataView value="#{beanSegLogin.loginDTO.listaModulos}"
 					var="modulo" layout="grid" gridIcon="pi pi-th-large" listIcon="pi pi-bars"
 					emptyMessage="No tiene módulos asignados. Consulte al administrador.">
-					<p:dataViewGridItem>
+					<p:dataViewGridItem columns="4">
 						<p:commandLink
 							action="#{beanSegLogin.actionMenu(modulo.rutaAcceso)}">
 							<p:panelGrid columns="1">
 								<h:outputText value="#{modulo.nombreModulo}" />
 								<h:outputText value="#{modulo.rutaAcceso}" />
-								<i class="pi pi-slack" style="font-size: 2rem"></i>
+								<i class="fa fa-folder" style="font-size: 2rem"></i>
 							</p:panelGrid>
 						</p:commandLink>
 					</p:dataViewGridItem>
 					
-					<p:dataViewListItem>
+					<p:dataViewListItem >
 					<p:commandLink
 							action="#{beanSegLogin.actionMenu(modulo.rutaAcceso)}">
-							<p:panelGrid columns="4">
+							<p:panelGrid columns="1">
 							
 								<h:outputText value="#{modulo.nombreModulo}" />
 								<h:outputText value="#{modulo.rutaAcceso}" />
-								
+								<i class="fa fa-folder" style="font-size: 2rem"></i>
 							</p:panelGrid>
 						</p:commandLink>
 				</p:dataViewListItem>

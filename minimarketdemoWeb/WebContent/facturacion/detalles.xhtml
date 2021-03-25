@@ -30,20 +30,31 @@
 	</h:form>
 	<p:panel>
 		<h:form>
-			<p:selectOneMenu filterMatchMode="contains" filter="true"
-						value="#{beanFactDetalleFactura.idFactCabecera}">
-						<f:selectItem itemLabel="Seleccione el id de la Factura..."
-							noSelectionOption="true" />
-						<f:selectItems value="#{beanFactDetalleFactura.listaCabecera}"
-							var="u" itemLabel="#{u.idFactCabecera}"
-							itemValue="#{u.idFactCabecera}"></f:selectItems>
-						<p:ajax update="@form"
-							listener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}"></p:ajax>
-			</p:selectOneMenu>
-			<p:inputText value="#{beanFactDetalleFactura.idFactCabecera}"
-							 requiredMessage="Ingrese el id de la factura" />
-			<p:commandButton update="@form" value="Consultar" icon="pi pi-clock"
-				actionListener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}" />
+			<p:panel style="width:100%">
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-4">
+
+						<p:selectOneMenu filterMatchMode="contains" filter="true"
+							value="#{beanFactDetalleFactura.idFactCabecera}">
+							<f:selectItem itemLabel="Seleccione el id de la Factura..."
+								noSelectionOption="true" />
+							<f:selectItems value="#{beanFactDetalleFactura.listaCabecera}"
+								var="u" itemLabel="#{u.idFactCabecera}"
+								itemValue="#{u.idFactCabecera}"></f:selectItems>
+							<p:ajax update="@form"
+								listener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}"></p:ajax>
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:inputText value="#{beanFactDetalleFactura.idFactCabecera}"
+							requiredMessage="Ingrese el id de la factura" />
+
+						<p:commandButton update="@form" value="Consultar"
+							icon="pi pi-clock"
+							actionListener="#{beanFactDetalleFactura.actionListenerConsultarDetalles()}" />
+					</div>
+				</div>
+			</p:panel>
 			<p:dataTable value="#{beanFactDetalleFactura.listaDetalles}" var="b"
 				emptyMessage="No hay registros aún." paginator="true" rows="30">
 				<p:column headerText="ID" style="width:50px">

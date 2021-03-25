@@ -102,26 +102,24 @@
 				</p:dataTable>
 			</p:panel>
 			<p:panel header = "Datos de la Factura">
+			<p:panelGrid columns="2">
 			<h:outputText value="Subtotal:" />
 				<h:outputText value="#{beanFactFacturacion.subTotal}" />
-				<br/>
 				<h:outputText value="IVA:" />
 				<h:outputText value="0.12" />
-				<br/>
 				<h:outputText value="Valor IVA:" />
 				<h:outputText value="#{beanFactFacturacion.iva}" />
-				<br/>
 				<h:outputText value="Descuento:" />
 				<p:selectOneMenu value="#{beanFactFacturacion.descuentoFact}">
 					<f:selectItems value="#{beanFactFacturacion.listaDescuentos}" var="ds"
 					itemLabel="#{ds.nombreDescuento}" itemValue="#{ds.idFactDescuento}">
 					</f:selectItems>
 				</p:selectOneMenu>
-				<br/>
 				<h:outputText value="Total:" />
 				<h:outputText value="#{beanFactFacturacion.total}" />
-				<br/>
+				</p:panelGrid>
 				<p:commandButton actionListener="#{beanFactFacturacion.actionListenerGenerarFactura()}" value="Facturar" update="@form"></p:commandButton>
+		
 		</p:panel>
 		</h:form>
 	</p:panel>

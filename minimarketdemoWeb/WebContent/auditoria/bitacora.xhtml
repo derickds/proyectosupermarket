@@ -21,7 +21,6 @@
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
-					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
 					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
 						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
 				</p:menuButton>
@@ -30,12 +29,24 @@
 	</h:form>
 	<p:panel>
 		<h:form>
-			<h:outputText value="Fecha inicio:" />
-			<p:datePicker value="#{beanAudBitacora.fechaInicio}" showTime="true" />
-			<h:outputText value="Fecha fin:" />
-			<p:datePicker value="#{beanAudBitacora.fechaFin}" showTime="true" />
-			<p:commandButton update="@form" value="Consultar" icon="pi pi-clock"
-				actionListener="#{beanAudBitacora.actionListenerConsultarBitacora()}" />
+			<p:panel style="width:100%">
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-4">
+						<h:outputText value="Fecha inicio: " />
+						<p:datePicker value="#{beanAudBitacora.fechaInicio}"
+							showTime="true" />
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<h:outputText value="Fecha fin: " />
+						<p:datePicker value="#{beanAudBitacora.fechaFin}" showTime="true" />
+					</div>
+					<div class="ui-g-12 ui-md-4">
+						<p:commandButton update="@form" value="Consultar"
+							icon="pi pi-clock"
+							actionListener="#{beanAudBitacora.actionListenerConsultarBitacora()}" />
+					</div>
+				</div>
+			</p:panel>
 			<p:dataTable value="#{beanAudBitacora.listaBitacora}" var="b"
 				emptyMessage="No hay registros aún." paginator="true" rows="30">
 				<p:column headerText="ID" style="width:50px">

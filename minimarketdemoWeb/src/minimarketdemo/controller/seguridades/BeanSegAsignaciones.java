@@ -56,7 +56,7 @@ public class BeanSegAsignaciones implements Serializable {
 		try {
 			managerSeguridades.eliminarAsignacion(idSegAsignacion);
 			listaAsignaciones=managerSeguridades.findAsignacionByUsuario(idSegUsuarioSeleccionado);
-			JSFUtil.crearMensajeINFO("Asignación eliminada.");
+			JSFUtil.crearMensajeINFO("Asignacion eliminada.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();
