@@ -59,7 +59,7 @@ public class BeanSegLogin implements Serializable {
 	}
 	
 	public String actionCerrarSesion(){
-		mSeguridades.cerrarSesion(loginDTO.getIdSegUsuario());
+		loginDTO=mSeguridades.cerrarSesion(idSegUsuario, direccionIP);
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "/login?faces-redirect=true";
 	}
@@ -73,7 +73,7 @@ public class BeanSegLogin implements Serializable {
 		if(loginDTO==null || loginDTO.getIdSegUsuario()==0)
 		{
 			try {
-				mSeguridades.accesoNoPermitido(0, requestPath);
+				mSeguridades.accesoNoPermitido(0, requestPath,direccionIP);
 				ec.redirect(ec.getRequestContextPath()+"/faces/login.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -98,7 +98,7 @@ public class BeanSegLogin implements Serializable {
 		}
 		try {
 			if(verificado==false) {
-				mSeguridades.accesoNoPermitido(loginDTO.getIdSegUsuario(), requestPath);
+				mSeguridades.accesoNoPermitido(loginDTO.getIdSegUsuario(), requestPath,direccionIP);
 				ec.redirect(ec.getRequestContextPath()+"/faces/login.xhtml");
 			}
 		}catch(Exception e) {
