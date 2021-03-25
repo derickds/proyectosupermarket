@@ -45,6 +45,10 @@ public class ManagerFacturacion {
     	return mDAO.findAll(FactCabecera.class, null);
     }
     
+    public List<FactCabecera> findByIdFacturaCabecera(int idCabecera)  throws Exception{
+    	return mDAO.findWhere(FactCabecera.class, "id_fact_cabecera="+idCabecera, null);
+    }
+    
     public List<InvStock> findAllProductosDisponibles(){
     	List<InvStock> listaStock = mDAO.findAll(InvStock.class, null);
     	List<InvStock> listaStock2 = new ArrayList<InvStock>();

@@ -16,6 +16,7 @@ import minimarketdemo.controller.cliente.BeanCliPersona;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.cliente.managers.ManagerCliente;
 import minimarketdemo.model.core.entities.CliPersona;
+import minimarketdemo.model.core.entities.FactCabecera;
 import minimarketdemo.model.core.entities.FactDescuento;
 import minimarketdemo.model.core.entities.InvProducto;
 import minimarketdemo.model.core.entities.InvStock;
@@ -41,6 +42,9 @@ public class BeanFactFacturacion implements Serializable {
 	private double iva;
 	private double total;
 	private LoginDTO loginDTO;
+	private List<FactCabecera> listaCabeceras;
+	private int idFact;
+	
 	
 	public BeanFactFacturacion() {
 		// TODO Auto-generated constructor stub
@@ -185,6 +189,30 @@ public class BeanFactFacturacion implements Serializable {
 	public String actionCargarFacturar() {
 		return "facturacion";
 	}
+	
+	public String actionCargarFacturas() {
+		try {
+			listaCabeceras = mFacturacion.findAllCabecerasFactura();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "facturas";
+	}
+	
+	public void actionListenerFindFacturaById() {
+		if(idFact==0) {
+			listaCabeceras = mFacturacion.findAllCabecerasFactura();
+		}else {
+		try {
+			listaCabeceras =  mFacturacion.findByIdFacturaCabecera(idFact);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	}
+
 
 	public List<InvStock> getListaProductosStock() {
 		return listaProductosStock;
@@ -275,4 +303,24 @@ public class BeanFactFacturacion implements Serializable {
 	}
 
 
+	public List<FactCabecera> getListaCabeceras() {
+		return listaCabeceras;
+	}
+
+
+	public void setListaCabeceras(List<FactCabecera> listaCabeceras) {
+		this.listaCabeceras = listaCabeceras;
+	}
+
+
+	public int getIdFact() {
+		return idFact;
+	}
+
+
+	public void setIdFact(int idFact) {
+		this.idFact = idFact;
+	}
+
+	
 }
