@@ -31,7 +31,7 @@
 	</h:form>
 	
 	<p:panel>
-		<h:form id="formDatos">
+		<h:form id="formCliente">
 		<p:panel header = "Datos del Cliente">
 				<p:inputText value="#{beanCliPersona.cedulaClienteFact}" requiredMessage="Ingrese un cliente"/>
 				<p:commandButton value="Buscar" actionListener="#{beanCliPersona.actionFindByIdCliente()}" update="@form"/>
@@ -52,6 +52,8 @@
 					</p:panelGrid>
 				</p:dataGrid>
 			</p:panel>
+			</h:form>
+			<h:form id="formDatos">
 			
 			<p:panel header="Datos de Productos">
 				<p:inputText value="#{beanPedPedidos.idStock}" />
@@ -96,7 +98,7 @@
 				</p:dataTable>
 			</p:panel>
 			
-			<p:commandButton actionListener="#{beanPedPedidos.actionListenerGenerarPedido()}" value="Nuevo pedido" update="@form"></p:commandButton>
+			<p:commandButton actionListener="#{beanPedPedidos.actionListenerGenerarPedido()}" value="Nuevo pedido" update="@form,:formCliente"></p:commandButton>
 		
 		</h:form>
 	</p:panel>

@@ -215,7 +215,6 @@ public void actionSeleccionarPedido(int idPedido) {
 	public String actionListenerGenerarPedido() {
 		SegUsuario user;
 		actionRegistrarClienteFactura();
-		beanCliPersona.setClienteFact(new CliPersona());
 		try {
 			user = mP.findUsuarioById(loginDTO.getIdSegUsuario());
 			mP.generarPedido(clientePed, user, carrito);
@@ -230,7 +229,7 @@ public void actionSeleccionarPedido(int idPedido) {
 			return "menu?faces-redirect=true";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JSFUtil.crearMensajeERROR(e.getMessage());
 		}
 		return "menu?faces-redirect=true";
 	}

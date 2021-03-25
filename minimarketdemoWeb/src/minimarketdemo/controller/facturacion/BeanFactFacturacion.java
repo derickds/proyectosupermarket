@@ -159,7 +159,7 @@ public class BeanFactFacturacion implements Serializable {
 		FactDescuento descuento;
 		SegUsuario user;
 		actionRegistrarClienteFactura();
-		beanCliPersona.setClienteFact(new CliPersona());
+		
 		try {
 			descuento = mFacturacion.findByIdDescuento(descuentoFact);
 			user = mFacturacion.findUsuarioById(loginDTO.getIdSegUsuario());
